@@ -2,4 +2,4 @@
     <div class="container">
       <slot/>
     </div>
-  </template>
+</template>

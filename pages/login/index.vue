@@ -58,12 +58,6 @@
             // Обработка успешного входа
             console.log(response);
             localStorage.setItem('token', response.data.access_token);
-            Swal.fire({
-              title: 'Успешный вход',
-              icon: 'success',
-              timer: 1500,
-              showConfirmButton: false
-            });
             this.$router.push('/dashboard');
           })
           .catch(error => {

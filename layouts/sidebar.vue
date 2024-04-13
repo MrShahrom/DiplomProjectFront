@@ -19,6 +19,8 @@
           <li><nuxt-link to="/supplier"><i class="fa fa-truck"></i> <span>Поставщики</span></nuxt-link></li>
           <li><nuxt-link to="/order"><i class="fa fa-minus"></i> <span>Заказы</span></nuxt-link></li>
           <li><nuxt-link to="/expense"><i class="fa fa-cart-plus"></i> <span>Затраты</span></nuxt-link></li>
+          <li><nuxt-link to="/expense"><i class="fa fa-cart-plus"></i> <span>Рецепты</span></nuxt-link></li>
+          <li><nuxt-link to="/expense"><i class="fa fa-cart-plus"></i> <span>Сырье</span></nuxt-link></li>
         </ul>
         <!-- /.sidebar-menu -->
       </section>

@@ -1,18 +1,20 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-
-export default defineNuxtConfig ({
+export default {
   devtools: { enabled: true },
-  plugins: [
-    
-  ],
+  router: {
+    middleware: ['authenticated'],
+  },
   css: [
     'bootstrap/dist/css/bootstrap.css',
   ],
+  js: [
+    'middleware/authenticated.js',
+  ],
   runtimeConfig: {
     public: {
-      apiUrl:'http://localhost:8000/',
-      apiKey:''
+      apiUrl: 'http://localhost:8000/',
+      apiKey: ''
     }
   },
-})
+};

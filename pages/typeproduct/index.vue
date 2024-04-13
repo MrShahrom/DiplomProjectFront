@@ -1,7 +1,23 @@
 <template>
-    <h1>Тип продукты</h1>
-</template>
-
-<script>
-
-</script>
+    <SidebarLayout>
+      
+    </SidebarLayout>
+  
+  </template>
+  
+  <script>
+  import SidebarLayout from '~/layouts/sidebar.vue';
+  
+  export default {
+    layout: 'sidebarLayout', 
+    components: {
+      SidebarLayout,
+    }
+  }
+  
+  </script>
+  
+  <style>
+  
+  </style>
+  

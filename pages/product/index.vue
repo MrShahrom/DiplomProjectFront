@@ -1,76 +1,75 @@
 <template>
 
-    <h1>product</h1>
-    
-    </template>
-        
-      <script>
-       
-       
-      import { deleteProject, getProjects } from '~/services/projectService'
-      import Swal from 'sweetalert2'
-       
-      export default {
-       
-        data() {
-          return {
-            projects:[]
-          };
-        },
-         
-        created(){
-          this.fetchProjectList()
-        },
-       
-        methods:{
-          fetchProjectList() {       
-            getProjects()
-              .then(response => {
-                  this.projects = response.data;
-                  return response
+  <h1>product</h1>
+
+</template>
+
+<script>
+
+import { deleteProject, getProjects } from '~/services/projectService'
+import Swal from 'sweetalert2'
+
+export default {
+
+  data() {
+    return {
+      projects: []
+    };
+  },
+
+  created() {
+    this.fetchProjectList()
+  },
+
+  methods: {
+    fetchProjectList() {
+      getProjects()
+        .then(response => {
+          this.projects = response.data;
+          return response
+        })
+        .catch(error => {
+          return error
+        });
+
+    },
+
+    handleDelete(id) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          deleteProject(id)
+            .then(response => {
+              Swal.fire({
+                icon: 'success',
+                title: 'Project deleted successfully!',
+                showConfirmButton: false,
+                timer: 1500
               })
-              .catch(error => {
-                return error
-            });
-       
-          },
-       
-          handleDelete(id){
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-              }).then((result) => {
-              if (result.isConfirmed) {
-                deleteProject(id)
-                  .then( response => {
-                      Swal.fire({
-                          icon: 'success',
-                          title: 'Project deleted successfully!',
-                          showConfirmButton: false,
-                          timer: 1500
-                      })
-                      this.fetchProjectList();
-                      return response
-                  })
-                  .catch(error => {
-                      Swal.fire({
-                            icon: 'error',
-                          title: 'An Error Occured!',
-                          showConfirmButton: false,
-                          timer: 1500
-                      })
-                      return error
-                  });
-              }
+              this.fetchProjectList();
+              return response
             })
-          }
-         
-       
+            .catch(error => {
+              Swal.fire({
+                icon: 'error',
+                title: 'An Error Occured!',
+                showConfirmButton: false,
+                timer: 1500
+              })
+              return error
+            });
         }
-      };
-      </script>
+      })
+    }
+
+
+  }
+};
+</script>
