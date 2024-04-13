@@ -5,9 +5,8 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel">
           <div class="pull-left info">
-            <p>{{ username }}</p>
-            <!-- Status -->
-            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            <p>ЧДММ "Чавонони Сугд"</p>
+            <!-- <p>{{ username }}</p> -->
           </div>
         </div>
         <!-- Sidebar Menu -->
@@ -17,10 +16,10 @@
           <li><nuxt-link to="/typeproduct"><i class="fa fa-list"></i> <span>Тип продукты</span></nuxt-link></li>
           <li><nuxt-link to="/customer"><i class="fa fa-users"></i> <span>Покупатели</span></nuxt-link></li>
           <li><nuxt-link to="/supplier"><i class="fa fa-truck"></i> <span>Поставщики</span></nuxt-link></li>
-          <li><nuxt-link to="/order"><i class="fa fa-minus"></i> <span>Заказы</span></nuxt-link></li>
-          <li><nuxt-link to="/expense"><i class="fa fa-cart-plus"></i> <span>Затраты</span></nuxt-link></li>
-          <li><nuxt-link to="/expense"><i class="fa fa-cart-plus"></i> <span>Рецепты</span></nuxt-link></li>
-          <li><nuxt-link to="/expense"><i class="fa fa-cart-plus"></i> <span>Сырье</span></nuxt-link></li>
+          <li><nuxt-link to="/order"><i class="fas fa-shopping-basket"></i> <span>Заказы</span></nuxt-link></li>
+          <li><nuxt-link to="/expense"><i class="fa fa-minus"></i> <span>Затраты</span></nuxt-link></li>
+          <li><nuxt-link to="/recipe"><i class="fas fa-book"></i> <span>Рецепты</span></nuxt-link></li>
+          <li><nuxt-link to="/rawmaterial"><i class="fa fa-seedling"></i> <span>Сырье</span></nuxt-link></li>
         </ul>
         <!-- /.sidebar-menu -->
       </section>
@@ -78,7 +77,7 @@
   
     .user-panel p {
       margin: 0;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: bold;
       color: #fff;
       text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5); /* Добавляем тень для текста */

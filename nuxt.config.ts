@@ -11,6 +11,9 @@ export default {
   js: [
     'middleware/authenticated.js',
   ],
+  script: [
+    { src: 'bootstrap/dist/js/bootstrap.bundle.min.js', defer: true },
+  ],
   runtimeConfig: {
     public: {
       apiUrl: 'http://localhost:8000/',

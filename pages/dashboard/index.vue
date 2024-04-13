@@ -1,6 +1,9 @@
 <template>
   <SidebarLayout>
   </SidebarLayout>
+  
+  <NavbarLayout>
+  </NavbarLayout>
 
   <section>
     <div class="container">
@@ -13,7 +16,7 @@
               <p class="card-text">Количество</p>
             </div>
             <div class="card-footer">
-              <a href="#" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></a>
+              <nuxt-link to="/product" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
             </div>
           </div>
         </div>
@@ -25,7 +28,7 @@
               <p class="card-text">Количество</p>
             </div>
             <div class="card-footer">
-              <a class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></a>
+              <nuxt-link to="/typeproduct" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
             </div>
           </div>
         </div>
@@ -37,7 +40,7 @@
               <p class="card-text">Количество</p>
             </div>
             <div class="card-footer">
-              <a class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></a>
+              <nuxt-link to="/customer" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
             </div>
           </div>
         </div>
@@ -49,14 +52,14 @@
               <p class="card-text">Количество</p>
             </div>
             <div class="card-footer">
-              <a class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></a>
+              <nuxt-link to="/supplier" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="container">
+    <div class="container2">
       <div class="row blocks">
         <!-- Заказы -->
         <div class="col-lg-3 col-sm-6">
@@ -66,7 +69,7 @@
               <p class="card-text">Количество</p>
             </div>
             <div class="card-footer">
-              <a href="#" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></a>
+              <nuxt-link to="/order" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
             </div>
           </div>
         </div>
@@ -78,7 +81,7 @@
               <p class="card-text">Количество</p>
             </div>
             <div class="card-footer">
-              <a class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></a>
+              <nuxt-link to="/expense" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
             </div>
           </div>
         </div>
@@ -90,7 +93,7 @@
               <p class="card-text">Количество</p>
             </div>
             <div class="card-footer">
-              <a class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></a>
+              <nuxt-link to="/recipe" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
             </div>
           </div>
         </div>
@@ -102,7 +105,7 @@
               <p class="card-text">Количество</p>
             </div>
             <div class="card-footer">
-              <a class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></a>
+              <nuxt-link to="/rawmaterial" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
             </div>
           </div>
         </div>
@@ -111,6 +114,7 @@
   </section>
 
   <div class="card-body order-table">
+    <h4>Таблица заказов</h4>
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -147,13 +151,16 @@
 
 <script>
 import SidebarLayout from '~/layouts/sidebar.vue'
+import NavbarLayout from '~/layouts/navbar.vue'
 import { getProjects } from '~/services/projectService'
 
 
 export default {
   layout: 'sidebarLayout',
+  layout: 'navbarLayout',
   components: {
     SidebarLayout,
+    NavbarLayout,
   },
   data() {
     return {
@@ -211,15 +218,15 @@ export default {
 <style scoped>
 .container {
   padding-left: 150px;
+  padding-top: 40px;
 }
 
 .container2 {
   padding-left: 150px;
-  padding-top: 30px;
 }
 
 .order-table {
-  padding-left: 150px;
+  padding-left: 160px;
   padding-top: 20px;
 }
 

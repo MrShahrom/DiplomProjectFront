@@ -2,25 +2,17 @@
     <SidebarLayout>
   
     </SidebarLayout>
-
-    <NavbarLayout>
-      
-    </NavbarLayout>
-  
   
   </template>
   
   <script>
   import SidebarLayout from '~/layouts/sidebar.vue';
-  import NavbarLayout from '~/layouts/navbar.vue';
   
   export default {
     layout: 'sidebarLayout',
-    layout: 'NavbarLayout',
-
+    
     components: {
       SidebarLayout,
-      NavbarLayout,
     }
   }
   
