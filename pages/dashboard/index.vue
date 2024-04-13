@@ -128,8 +128,8 @@
       <tbody>
         <tr v-for="project in projects" :key="project.id">
           <td>{{ project.id }}</td>
-          <td>{{ project.id_client }}</td>
-          <td>{{ project.id_product }}</td>
+          <td>{{ `${project.id_client.lastname} ${project.id_client.firstname} ${project.id_client.patronymic}` }}</td>
+          <td>{{ project.id_product.name }}</td>
           <td>{{ project.date_of_shipment }}</td>
           <td>{{ project.units_of_measurement }}</td>
           <td>{{ project.price_per_unit }}</td>
@@ -148,6 +148,7 @@
 <script>
 import SidebarLayout from '~/layouts/sidebar.vue'
 import { getProjects } from '~/services/projectService'
+
 
 export default {
   layout: 'sidebarLayout',
@@ -177,9 +178,11 @@ export default {
       const headers = {
         'Authorization': `Bearer ${token}`
       };
-      getProjects({ headers })
+
+      getProjects(headers)
         .then(response => {
-          this.projects = response.data;
+          this.projects = response.data["data"];
+          console.log(response.data["data"])
         })
         .catch(error => {
           if (error.response) {
