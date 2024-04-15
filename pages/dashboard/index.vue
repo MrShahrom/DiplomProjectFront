@@ -57,9 +57,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="container2">
       <div class="row blocks">
         <!-- Заказы -->
         <div class="col-lg-3 col-sm-6">
@@ -111,41 +108,8 @@
         </div>
       </div>
     </div>
+
   </section>
-
-  <div class="card-body order-table">
-    <h4>Таблица заказов</h4>
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>ФИО</th>
-          <th>Продукт</th>
-          <th>Дата заказа</th>
-          <th>Ед. из-я (сомони)</th>
-          <th>Цена</th>
-          <th>Общ. сумма</th>
-          <th>Количество</th>
-          <th>Тип заказа</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="project in projects" :key="project.id">
-          <td>{{ project.id }}</td>
-          <td>{{ `${project.id_client.lastname} ${project.id_client.firstname} ${project.id_client.patronymic}` }}</td>
-          <td>{{ project.id_product.name }}</td>
-          <td>{{ project.date_of_shipment }}</td>
-          <td>{{ project.units_of_measurement }}</td>
-          <td>{{ project.price_per_unit }}</td>
-          <td>{{ project.total_amount }}</td>
-          <td>{{ project.quantity }}</td>
-          <td>{{ project.type_of_sale }}</td>
-
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
 
 </template>
 
@@ -221,10 +185,6 @@ export default {
   padding-top: 40px;
 }
 
-.container2 {
-  padding-left: 150px;
-}
-
 .order-table {
   padding-left: 160px;
   padding-top: 20px;
@@ -234,7 +194,6 @@ export default {
   padding-top: 30px;
 }
 
-/* Стили для градиента синего к зеленому */
 .btn-1 {
   background-color: #00a65a;
 }
