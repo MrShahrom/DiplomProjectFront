@@ -7,21 +7,19 @@
 
   <section>
     <div class="container2">
-      <h2>Таблица заказов</h2>
+      <h2>Таблица продуктов</h2>
       <div class="card-body order-table">
         <NuxtLink to="/create" class="btn btn-primary btn-add">Добавить продукт</NuxtLink>
         <table class="table table-bordered">
           <thead>
             <tr>
               <th>ID</th>
-              <th>ФИО</th>
-              <th>Продукт</th>
-              <th>Дата заказа</th>
-              <th>Ед. из-я (сомони)</th>
-              <th>Цена</th>
-              <th>Общ. сумма</th>
+              <th>Название</th>
+              <th>Цена продажа</th>
+              <th>Склад</th>
+              <th>Тип продукта</th>
               <th>Количество</th>
-              <th>Тип заказа</th>
+              <th>Статус</th>
               <th>Действие из.</th>
               <th>Действие уд.</th>
             </tr>
@@ -29,15 +27,12 @@
           <tbody>
             <tr v-for="project in projects" :key="project.id">
               <td>{{ project.id }}</td>
-              <td>{{ `${project.id_client.lastname} ${project.id_client.firstname} ${project.id_client.patronymic}` }}
-              </td>
-              <td>{{ project.id_product.name }}</td>
-              <td>{{ project.date_of_shipment }}</td>
-              <td>{{ project.units_of_measurement }}</td>
-              <td>{{ project.price_per_unit }}</td>
-              <td>{{ project.total_amount }}</td>
+              <td>{{ project.name }}</td>
+              <td>{{ project.selling_price }}</td>
+              <td>{{ project.id_sklad.name }}</td>
+              <td>{{ project.id_type_product.product_name }}</td>
               <td>{{ project.quantity }}</td>
-              <td>{{ project.type_of_sale }}</td>
+              <td>{{ project.status }}</td>
               <td>
                 <NuxtLink :to="`/edit/${project.id}`" class="btn btn-outline-success mx-1">Изменить</NuxtLink>
               </td>
@@ -58,7 +53,7 @@
 <script>
 import SidebarLayout from '~/layouts/sidebar.vue'
 import NavbarLayout from '~/layouts/navbar.vue'
-import { getProjects } from '~/services/projectService'
+import { getProducts } from '~/services/projectService'
 
 
 export default {
@@ -92,7 +87,7 @@ export default {
           'Authorization': `Bearer ${token}`
         };
 
-        getProjects(headers)
+        getProducts(headers)
           .then(response => {
             this.projects = response.data["data"];
             console.log(response.data["data"])

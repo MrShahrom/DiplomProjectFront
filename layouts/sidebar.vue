@@ -14,7 +14,7 @@
           <li><nuxt-link to="/dashboard"><i class="fa fa-dashboard "></i> <span>Dashboard</span></nuxt-link></li>
           <li><nuxt-link to="/product"><i class="fa fa-cubes"></i> <span>Продукты</span></nuxt-link></li>
           <li><nuxt-link to="/typeproduct"><i class="fa fa-list"></i> <span>Тип продукты</span></nuxt-link></li>
-          <li><nuxt-link to="/customer"><i class="fa fa-users"></i> <span>Покупатели</span></nuxt-link></li>
+          <li><nuxt-link to="/customer"><i class="fa fa-users"></i> <span>Клиенты</span></nuxt-link></li>
           <li><nuxt-link to="/supplier"><i class="fa fa-truck"></i> <span>Поставщики</span></nuxt-link></li>
           <li><nuxt-link to="/order"><i class="fas fa-shopping-basket"></i> <span>Заказы</span></nuxt-link></li>
           <li><nuxt-link to="/expense"><i class="fa fa-minus"></i> <span>Затраты</span></nuxt-link></li>

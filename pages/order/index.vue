@@ -9,7 +9,7 @@
     <div class="container2">
       <h2>Таблица заказов</h2>
       <div class="card-body order-table">
-        <NuxtLink to="/create" class="btn btn-primary btn-add">Добавить продукт</NuxtLink>
+        <NuxtLink to="/create" class="btn btn-primary btn-add">Добавить заказ</NuxtLink>
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -19,8 +19,8 @@
               <th>Дата заказа</th>
               <th>Ед. из-я (сомони)</th>
               <th>Цена</th>
-              <th>Общ. сумма</th>
               <th>Количество</th>
+              <th>Общ. сумма</th>
               <th>Тип заказа</th>
               <th>Действие из.</th>
               <th>Действие уд.</th>
@@ -35,8 +35,8 @@
               <td>{{ project.date_of_shipment }}</td>
               <td>{{ project.units_of_measurement }}</td>
               <td>{{ project.price_per_unit }}</td>
-              <td>{{ project.total_amount }}</td>
               <td>{{ project.quantity }}</td>
+              <td>{{ project.total_amount }}</td>
               <td>{{ project.type_of_sale }}</td>
               <td>
                 <NuxtLink :to="`/edit/${project.id}`" class="btn btn-outline-success mx-1">Изменить</NuxtLink>

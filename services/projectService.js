@@ -39,3 +39,19 @@ export const updateProject = (id, project) =>{
 export const deleteProject = (id) =>{
     return useNuxtApp().$axiosApiClient.delete(`/api/orders/${id}`)
 }
+//Product
+export const getProducts = (headers) =>{
+    return useNuxtApp().$axiosApiClient.get('/api/products', {headers})
+}    
+export const getProduct = (id) =>{
+    return useNuxtApp().$axiosApiClient.get(`/api/products/${id}`)
+}   
+export const createProduct = (project) =>{
+    return useNuxtApp().$axiosApiClient.post('/api/products', project)
+}   
+export const updateProduct = (id, project) =>{
+    return useNuxtApp().$axiosApiClient.patch(`/api/products/${id}`, project)
+} 
+export const deleteProduct = (id) =>{
+    return useNuxtApp().$axiosApiClient.delete(`/api/products/${id}`)
+}

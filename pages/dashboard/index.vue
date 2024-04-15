@@ -36,7 +36,7 @@
         <div class="col-lg-3 col-sm-6">
           <div class="card btn-4 text-white">
             <div class="card-body">
-              <h3 class="card-title">Покупатели</h3>
+              <h3 class="card-title">Клиенты</h3>
               <p class="card-text">Количество</p>
             </div>
             <div class="card-footer">
