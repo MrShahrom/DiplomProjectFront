@@ -9,7 +9,7 @@
     <div class="container2">
       <h2>Таблица продуктов</h2>
       <div class="card-body order-table">
-        <NuxtLink to="/product/create" class="btn btn-primary btn-add">Добавить продукт</NuxtLink>
+        <NuxtLink to="/product/create" class="btn btn-primary btn-add">Добавить продукта</NuxtLink>
         <table class="table table-bordered">
           <thead>
             <tr>

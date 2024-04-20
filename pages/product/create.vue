@@ -1,117 +1,128 @@
 <template>
-  <h2 class="text-center mt-5 mb-3">Добавить продукта</h2>
+  <h2 class="text-center mt-5 mb-3">Добавить продукт</h2>
   <div class="card">
     <div class="card-header">
-      <NuxtLink class="btn btn-outline-info float-right" to="/product">Все продукты
-      </NuxtLink>
+      <NuxtLink class="btn btn-outline-info float-right" to="/product">Все продукты</NuxtLink>
     </div>
     <div class="card-body">
-      <form>
+      <form @submit.prevent="handleSave">
         <div class="form-group">
-          <label htmlFor="name">Название</label>
+          <label for="name">Название</label>
           <input v-model="project.name" type="text" class="form-control" id="name" name="name" />
         </div>
         <div class="form-group">
-          <label htmlFor="sellingprice">Цена продажи</label>
-          <input v-model="project.sellingprice" type="text" class="form-control" id="sellingprice"
+          <label for="sellingprice">Цена продажи</label>
+          <input v-model="project.selling_price" type="number" class="form-control" id="sellingprice"
             name="sellingprice" />
         </div>
         <div class="form-group">
-          <label htmlFor="sklad">Склад</label>
-          <input v-model="project.sklad" type="text" class="form-control" id="sklad" name="sklad" />
+          <label for="sklad">Склад</label>
+          <select v-model="project.id_sklad" class="form-control form-select" id="sklad" name="sklad">
+            <option v-for="item in warehouses" :key="item.id" :value="item.id">{{ item.name }}</option>
+          </select>
         </div>
         <div class="form-group">
-          <label htmlFor="typeproduct">Тип продукта</label>
-          <input v-model="project.typeproduct" type="text" class="form-control" id="typeproduct" name="typeproduct" />
+          <label for="typeproduct">Тип продукта</label>
+          <select v-model="project.id_type_product" class="form-control form-select" id="typeproduct" name="typeproduct">
+            <option v-for="item in productTypes" :key="item.id" :value="item.id">{{ item.product_name }}</option>
+          </select>
         </div>
         <div class="form-group">
-          <label htmlFor="quantity">Количество</label>
-          <input v-model="project.quantity" type="text" class="form-control" id="quantity" name="quantity" />
+          <label for="quantity">Количество</label>
+          <input v-model="project.quantity" type="number" class="form-control" id="quantity" name="quantity" />
         </div>
         <div class="form-group">
-          <label htmlFor="status">Статус</label>
+          <label for="status">Статус</label>
           <input v-model="project.status" type="text" class="form-control" id="status" name="status" />
         </div>
 
-        <button @click="handleSave" :disabled="isSaving" type="button" class="btn btn-outline-primary mt-3">
-          Save Project
+        <button :disabled="isSaving" type="submit" class="btn btn-outline-primary mt-3">
+          {{ isSaving ? 'Сохранение...' : 'Сохранить продукт' }}
         </button>
       </form>
     </div>
   </div>
 </template>
 
+// create.vue
 <script>
-import Swal from 'sweetalert2'
-import { createProduct } from '~/services/projectService';
-import axios from 'axios'; // Добавляем импорт axios
+import Swal from 'sweetalert2';
+import { createProduct, getSklads, getTypeProducts } from '~/services/projectService';
 
 export default {
   data() {
     return {
       project: {
         name: '',
-        sellingprice: '',
-        sklad: '',
-        typeproduct: '',
+        selling_price: '',
+        id_sklad: '',
+        id_type_product: '',
         quantity: '',
         status: ''
       },
       isSaving: false,
+      warehouses: [],
+      productTypes: [],
+      token: '' // Добавляем свойство для хранения токена
     };
   },
+  mounted() {
+
+    // Получаем токен из localStorage
+    this.token = localStorage.getItem('token');
+    this.fetchData();
+
+  },
   methods: {
-    handleSave() {
-      // Извлечение токена из localStorage
-      const token = localStorage.getItem('token');
+    async fetchData() {
+      try {
+        // Получаем данные о складах и типах продуктов с передачей токена
+        const [warehouses, productTypes] = await Promise.all([
+          getSklads(this.token),
+          getTypeProducts(this.token)
 
-      // Проверка наличия токена
-      if (!token) {
-        // Если токен отсутствует, выполните действие, например, перенаправление на страницу входа
-        console.error('Token not found');
-        return;
+        ]);
+        this.warehouses = warehouses.data['data'];
+        this.productTypes = productTypes.data['data'];
+
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
       }
+    },
 
-      // Установка токена в заголовке Authorization
-      const headers = {
-        Authorization: `Bearer ${token}`
-      };
-
-      // Установка заголовков для axios
-      const axiosInstance = axios.create({
-        baseURL: 'http://localhost:8000/api',
-        headers: headers
-      });
-
-      // Отправка запроса на сервер с использованием axiosInstance
-      this.isSaving = true;
-      axiosInstance.post('/products', this.project)
-        .then(response => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Project saved successfully!',
-            showConfirmButton: false,
-            timer: 1500
-          })
-          this.isSaving = false;
-          this.project.name = "";
-          this.project.sellingprice = "";
-          this.project.sklad = "";
-          this.project.typeproduct = "";
-          this.project.quantity = "";
-          this.project.status = "";
-          return response;
-        })
-        .catch(error => {
-          this.isSaving = false;
-          Swal.fire({
-            icon: 'error',
-            title: 'An Error Occured!',
-            showConfirmButton: false,
-            timer: 1500
-          })
-          return error;
+    async handleSave() {
+      try {
+        this.isSaving = true;
+        // Передаем токен при создании продукта\
+        const headers = {
+          'Authorization': `Bearer ${this.token}`
+        };
+        await createProduct(this.project, headers);
+        Swal.fire({
+          icon: 'success',
+          title: 'Продукт успешно сохранен!',
+          showConfirmButton: false,
+          timer: 1500
         });
+        this.isSaving = false;
+        this.project = {
+          name: '',
+          sellingprice: '',
+          sklad: '',
+          typeproduct: '',
+          quantity: '',
+          status: ''
+        };
+      } catch (error) {
+        console.error('Error saving product:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Произошла ошибка!',
+          showConfirmButton: false,
+          timer: 1500
+        });
+        this.isSaving = false;
+      }
     },
   },
 };
