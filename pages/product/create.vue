@@ -37,7 +37,7 @@
         </div>
 
         <button :disabled="isSaving" type="submit" class="btn btn-outline-primary mt-3">
-          {{ isSaving ? 'Сохранение...' : 'Сохранить продукт' }}
+          {{ isSaving ? 'Сохранение...' : 'Сохранить' }}
         </button>
       </form>
     </div>
