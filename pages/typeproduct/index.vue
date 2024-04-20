@@ -9,7 +9,7 @@
     <div class="container2">
       <h2>Таблица тип продуктов</h2>
       <div class="card-body order-table">
-        <NuxtLink to="/product/create" class="btn btn-primary btn-add">Добавить тип продукта</NuxtLink>
+        <NuxtLink to="/typeproduct/create" class="btn btn-primary btn-add">Добавить тип продукта</NuxtLink>
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -30,7 +30,7 @@
               <td>{{ project.description }}</td>
               <td>{{ project.status }}</td>
               <td>
-                <NuxtLink :to="`/edit/${project.id}`" class="btn btn-outline-success mx-1">Изменить</NuxtLink>
+                <NuxtLink :to="`/typeproduct/edit/${project.id}`" class="btn btn-outline-success mx-1">Изменить</NuxtLink>
               </td>
               <td>
                 <button @click="handleDelete(project.id)" className="btn btn-danger mx-1">Удалить</button>
@@ -49,7 +49,7 @@
 <script>
 import SidebarLayout from '~/layouts/sidebar.vue'
 import NavbarLayout from '~/layouts/navbar.vue'
-import { getTypeProducts } from '~/services/projectService'
+import { getTypeProducts2 } from '~/services/projectService'
 
 
 export default {
@@ -72,38 +72,38 @@ export default {
 
   methods: {
     fetchProjectList() {
-      if (process.client) {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          console.error('Token not found in local storage');
-          return;
-        }
-
-        const headers = {
-          'Authorization': `Bearer ${token}`
-        };
-
-        getTypeProducts(headers)
-          .then(response => {
-            this.projects = response.data["data"];
-            console.log(response.data["data"])
-          })
-          .catch(error => {
-            if (error.response) {
-              console.error('Status code:', error.response.status);
-              console.error('Response data:', error.response.data);
-              console.error('Response headers:', error.response.headers);
-            } else if (error.request) {
-              console.error('No response received:', error.request);
-            } else {
-              console.error('Error setting up request:', error.message);
+        if (process.client) {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('Token not found in local storage');
+                return;
             }
-          });
-      } else {
-        console.error('Trying to access localStorage on the server side.');
-      }
+
+            const headers = {
+                'Authorization': `Bearer ${token}`
+            };
+
+            getTypeProducts2(headers)
+                .then(response => {
+                    this.projects = response.data["data"];
+                    console.log(response.data["data"])
+                })
+                .catch(error => {
+                    if (error.response) {
+                        console.error('Status code:', error.response.status);
+                        console.error('Response data:', error.response.data);
+                        console.error('Response headers:', error.response.headers);
+                    } else if (error.request) {
+                        console.error('No response received:', error.request);
+                    } else {
+                        console.error('Error setting up request:', error.message);
+                    }
+                });
+        } else {
+            console.error('Trying to access localStorage on the server side.');
+        }
     }
-  }
+}
 
 
 };

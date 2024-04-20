@@ -139,12 +139,15 @@ export const getTypeProducts = (token) => {
         }
     });
 };  
+export const getTypeProducts2 = (headers) => {
+    return useNuxtApp().$axiosApiClient.get('/api/typeproducts', { headers });
+}; 
 export const getTypeProduct = (id) =>{
     return useNuxtApp().$axiosApiClient.get(`/api/typeproducts/${id}`)
 }   
-export const createTypeProduct = (project) =>{
-    return useNuxtApp().$axiosApiClient.post('/api/typeproducts', project)
-}   
+export const createTypeProduct = (project, headers) =>{
+    return useNuxtApp().$axiosApiClient.post('/api/typeproducts', project, { headers })
+}
 export const updateTypeProduct = (id, project) =>{
     return useNuxtApp().$axiosApiClient.patch(`/api/typeproducts/${id}`, project)
 } 
