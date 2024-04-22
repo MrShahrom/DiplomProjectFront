@@ -8,18 +8,18 @@
 export const getClients = (headers) =>{
     return useNuxtApp().$axiosApiClient.get('/api/clients', {headers})
 }    
-export const getClient = (id) =>{
-    return useNuxtApp().$axiosApiClient.get(`/api/clients/${id}`)
+export const getClient = (id, headers) =>{
+    return useNuxtApp().$axiosApiClient.get(`/api/clients/${id}`, { headers })
 }   
 export const createClients = (project, headers) =>{
     
     return useNuxtApp().$axiosApiClient.post('/api/clients', project, { headers })
 }  
-export const updateClient = (id, project) =>{
-    return useNuxtApp().$axiosApiClient.patch(`/api/clients/${id}`, project)
+export const updateClient = (id, project, headers) =>{
+    return useNuxtApp().$axiosApiClient.patch(`/api/clients/${id}`, project, { headers })
 } 
-export const deleteClient = (id) =>{
-    return useNuxtApp().$axiosApiClient.delete(`/api/clients/${id}`)
+export const deleteClient = (id, headers) =>{
+    return useNuxtApp().$axiosApiClient.delete(`/api/clients/${id}`, { headers })
 }
 
 //Suppliers
@@ -142,17 +142,17 @@ export const getTypeProducts = (token) => {
 export const getTypeProducts2 = (headers) => {
     return useNuxtApp().$axiosApiClient.get('/api/typeproducts', { headers });
 }; 
-export const getTypeProduct = (id) =>{
-    return useNuxtApp().$axiosApiClient.get(`/api/typeproducts/${id}`)
+export const getTypeProduct = (id, headers) =>{
+    return useNuxtApp().$axiosApiClient.get(`/api/typeproducts/${id}`, { headers });
 }   
 export const createTypeProduct = (project, headers) =>{
-    return useNuxtApp().$axiosApiClient.post('/api/typeproducts', project, { headers })
+    return useNuxtApp().$axiosApiClient.post('/api/typeproducts', project, { headers });
 }
-export const updateTypeProduct = (id, project) =>{
-    return useNuxtApp().$axiosApiClient.patch(`/api/typeproducts/${id}`, project)
-} 
-export const deleteTypeProduct = (id) =>{
-    return useNuxtApp().$axiosApiClient.delete(`/api/typeproducts/${id}`)
+export const updateTypeProduct = (id, project, headers) =>{
+    return useNuxtApp().$axiosApiClient.patch(`/api/typeproducts/${id}`, project, { headers });
+}
+export const deleteTypeProduct = (id, headers) =>{
+    return useNuxtApp().$axiosApiClient.delete(`/api/typeproducts/${id}`, { headers });
 }
 
 //Sklad

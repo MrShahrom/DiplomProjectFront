@@ -30,7 +30,8 @@
               <td>{{ project.description }}</td>
               <td>{{ project.status }}</td>
               <td>
-                <NuxtLink :to="`/typeproduct/edit/${project.id}`" class="btn btn-outline-success mx-1">Изменить</NuxtLink>
+                <NuxtLink :to="`/typeproduct/edit/${project.id}`" class="btn btn-outline-success mx-1">Изменить
+                </NuxtLink>
               </td>
               <td>
                 <button @click="handleDelete(project.id)" className="btn btn-danger mx-1">Удалить</button>
@@ -47,9 +48,10 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2';
 import SidebarLayout from '~/layouts/sidebar.vue'
 import NavbarLayout from '~/layouts/navbar.vue'
-import { getTypeProducts2 } from '~/services/projectService'
+import { getTypeProducts2, deleteTypeProduct } from '~/services/projectService'
 
 
 export default {
@@ -72,38 +74,83 @@ export default {
 
   methods: {
     fetchProjectList() {
-        if (process.client) {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                console.error('Token not found in local storage');
-                return;
-            }
-
-            const headers = {
-                'Authorization': `Bearer ${token}`
-            };
-
-            getTypeProducts2(headers)
-                .then(response => {
-                    this.projects = response.data["data"];
-                    console.log(response.data["data"])
-                })
-                .catch(error => {
-                    if (error.response) {
-                        console.error('Status code:', error.response.status);
-                        console.error('Response data:', error.response.data);
-                        console.error('Response headers:', error.response.headers);
-                    } else if (error.request) {
-                        console.error('No response received:', error.request);
-                    } else {
-                        console.error('Error setting up request:', error.message);
-                    }
-                });
-        } else {
-            console.error('Trying to access localStorage on the server side.');
+      if (process.client) {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          console.error('Token not found in local storage');
+          return;
         }
+
+        const headers = {
+          'Authorization': `Bearer ${token}`
+        };
+
+        getTypeProducts2(headers)
+          .then(response => {
+            this.projects = response.data["data"];
+            console.log(response.data["data"])
+          })
+          .catch(error => {
+            if (error.response) {
+              console.error('Status code:', error.response.status);
+              console.error('Response data:', error.response.data);
+              console.error('Response headers:', error.response.headers);
+            } else if (error.request) {
+              console.error('No response received:', error.request);
+            } else {
+              console.error('Error setting up request:', error.message);
+            }
+          });
+      } else {
+        console.error('Trying to access localStorage on the server side.');
+      }
+    },
+
+    async handleDelete(productId) {
+      const confirmResult = await Swal.fire({
+        title: 'Вы уверены?',
+        text: 'Вы действительно хотите удалить этот продукт?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Да, удалить!',
+        cancelButtonText: 'Отмена'
+      });
+
+      if (confirmResult.isConfirmed) {
+        const token = localStorage.getItem('token');
+        const headers = {
+          'Authorization': `Bearer ${token}`
+        };
+
+        try {
+          await deleteTypeProduct(productId, headers);
+
+          // Успешно удалено
+          Swal.fire({
+            icon: 'success',
+            title: 'Продукт успешно удален!',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          // Обновляем список продуктов
+          this.fetchProjectList();
+        } catch (error) {
+          // Ошибка удаления
+          console.error('Error deleting product:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Ошибка удаления продукта!',
+            text: 'Пожалуйста, попробуйте еще раз.',
+            showConfirmButton: true,
+          });
+        }
+      }
     }
-}
+
+
+  }
 
 
 };
@@ -121,6 +168,7 @@ export default {
 h2 {
   text-align: center;
 }
+
 .btn-add {
   margin-bottom: 10px;
 }
