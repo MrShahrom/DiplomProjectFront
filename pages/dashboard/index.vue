@@ -8,18 +8,6 @@
   <section>
     <div class="container">
       <div class="row blocks">
-        <!-- Продукты -->
-        <div class="col-lg-3 col-sm-6">
-          <div class="card btn-1 text-white">
-            <div class="card-body">
-              <h3 class="card-title">Продукты</h3>
-              <p class="card-text">Количество</p>
-            </div>
-            <div class="card-footer">
-              <nuxt-link to="/product" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
-            </div>
-          </div>
-        </div>
         <!-- Тип продукты -->
         <div class="col-lg-3 col-sm-6">
           <div class="card btn-2 text-white">
@@ -29,6 +17,18 @@
             </div>
             <div class="card-footer">
               <nuxt-link to="/typeproduct" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
+            </div>
+          </div>
+        </div>
+        <!-- Продукты -->
+        <div class="col-lg-3 col-sm-6">
+          <div class="card btn-1 text-white">
+            <div class="card-body">
+              <h3 class="card-title">Продукты</h3>
+              <p class="card-text">Количество</p>
+            </div>
+            <div class="card-footer">
+              <nuxt-link to="/product" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
             </div>
           </div>
         </div>
@@ -153,7 +153,6 @@ export default {
       getProjects(headers)
         .then(response => {
           this.projects = response.data["data"];
-          console.log(response.data["data"])
         })
         .catch(error => {
           if (error.response) {

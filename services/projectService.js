@@ -93,7 +93,6 @@ export const deleteRawMaterials = (id) =>{
 //import axios,{ AxiosRequestConfig } from 'axios';
 //Orders
 export const getProjects = (headers) =>{
-    //axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     return useNuxtApp().$axiosApiClient.get('/api/orders', {headers})
 }    
 export const getProject = (id, headers) =>{
@@ -122,9 +121,6 @@ export const createProduct = (project, headers) =>{
 }  
 export const updateProduct = (project, id, headers) => {
     console.log("Route:",`/api/products/${id}`, project, { headers });
-    console.log("project:",project);
-    console.log("headers:",headers);
-    console.log("id:",id);
     return useNuxtApp().$axiosApiClient.patch(`/api/products/${id}`, project, { headers });
 };
 export const deleteProduct = (id, headers) =>{

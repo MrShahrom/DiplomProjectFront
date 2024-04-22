@@ -9,7 +9,7 @@
     <div class="container2">
       <h2>Таблица заказов</h2>
       <div class="card-body order-table">
-        <NuxtLink to="/create" class="btn btn-primary btn-add">Добавить заказ</NuxtLink>
+        <NuxtLink to="/order/create" class="btn btn-primary btn-add">Добавить заказ</NuxtLink>
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -95,7 +95,6 @@ export default {
         getProjects(headers)
           .then(response => {
             this.projects = response.data["data"];
-            console.log(response.data["data"])
           })
           .catch(error => {
             if (error.response) {
