@@ -26,17 +26,17 @@ export const deleteClient = (id, headers) =>{
 export const getSuppliers = (headers) =>{
     return useNuxtApp().$axiosApiClient.get('/api/suppliers', {headers})
 }    
-export const getSupplier = (id) =>{
-    return useNuxtApp().$axiosApiClient.get(`/api/suppliers/${id}`)
+export const getSupplier = (id, headers) =>{
+    return useNuxtApp().$axiosApiClient.get(`/api/suppliers/${id}`, {headers})
 }   
-export const createSuppliers = (project) =>{
-    return useNuxtApp().$axiosApiClient.post('/api/suppliers', project)
+export const createSuppliers = (project, headers) =>{
+    return useNuxtApp().$axiosApiClient.post('/api/suppliers', project, {headers})
 }   
-export const updateSuppliers = (id, project) =>{
-    return useNuxtApp().$axiosApiClient.patch(`/api/suppliers/${id}`, project)
+export const updateSuppliers = (id, project, headers) =>{
+    return useNuxtApp().$axiosApiClient.patch(`/api/suppliers/${id}`, project, {headers})
 } 
-export const deleteSuppliers = (id) =>{
-    return useNuxtApp().$axiosApiClient.delete(`/api/suppliers/${id}`)
+export const deleteSuppliers = (id, headers) =>{
+    return useNuxtApp().$axiosApiClient.delete(`/api/suppliers/${id}`, {headers})
 }
 
 //Expenses
@@ -96,17 +96,17 @@ export const getProjects = (headers) =>{
     //axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     return useNuxtApp().$axiosApiClient.get('/api/orders', {headers})
 }    
-export const getProject = (id) =>{
-    return useNuxtApp().$axiosApiClient.get(`/api/orders/${id}`)
+export const getProject = (id, headers) =>{
+    return useNuxtApp().$axiosApiClient.get(`/api/orders/${id}`, {headers})
 }   
-export const createProject = (project) =>{
-    return useNuxtApp().$axiosApiClient.post('/api/orders', project)
+export const createProject = (project, headers) =>{
+    return useNuxtApp().$axiosApiClient.post('/api/orders', project, {headers})
 }   
-export const updateProject = (id, project) =>{
-    return useNuxtApp().$axiosApiClient.patch(`/api/orders/${id}`, project)
+export const updateProject = (id, project, headers) =>{
+    return useNuxtApp().$axiosApiClient.patch(`/api/orders/${id}`, project, {headers})
 } 
-export const deleteProject = (id) =>{
-    return useNuxtApp().$axiosApiClient.delete(`/api/orders/${id}`)
+export const deleteProject = (id, headers) =>{
+    return useNuxtApp().$axiosApiClient.delete(`/api/orders/${id}`, {headers})
 }
 
 //Product
