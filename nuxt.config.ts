@@ -1,4 +1,3 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 
 export default {
   devtools: { enabled: true },
@@ -7,11 +6,13 @@ export default {
   },
   css: [
     'bootstrap/dist/css/bootstrap.css',
+    '@fortawesome/fontawesome-free/css/all.css',
   ],
   js: [
     'middleware/authenticated.js',
   ],
   script: [
+    { src: '@fortawesome/fontawesome-free/js/all.js', defer: true },
     { src: 'bootstrap/dist/js/bootstrap.bundle.min.js', defer: true },
   ],
   runtimeConfig: {
