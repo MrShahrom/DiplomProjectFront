@@ -5,7 +5,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel" id="user-panel">
         <div class="pull-left info">
-          <p>ЧДММ "Чавонони Сугд"</p>
+          <p>Dashboard</p>
           <!-- <p>{{ username }}</p> -->
         </div>
       </div>

@@ -43,17 +43,17 @@ export const deleteSuppliers = (id, headers) =>{
 export const getCosts = (headers) =>{
     return useNuxtApp().$axiosApiClient.get('/api/costs', {headers})
 }    
-export const getCost = (id) =>{
-    return useNuxtApp().$axiosApiClient.get(`/api/costs/${id}`)
+export const getCost = (id, headers) =>{
+    return useNuxtApp().$axiosApiClient.get(`/api/costs/${id}`, {headers})
 }   
-export const createCosts = (project) =>{
-    return useNuxtApp().$axiosApiClient.post('/api/costs', project)
+export const createCosts = (project, headers) =>{
+    return useNuxtApp().$axiosApiClient.post('/api/costs', project, {headers})
 }   
-export const updateCosts = (id, project) =>{
-    return useNuxtApp().$axiosApiClient.patch(`/api/costs/${id}`, project)
+export const updateCosts = (id, project, headers) =>{
+    return useNuxtApp().$axiosApiClient.patch(`/api/costs/${id}`, project, {headers})
 } 
-export const deleteCosts = (id) =>{
-    return useNuxtApp().$axiosApiClient.delete(`/api/costs/${id}`)
+export const deleteCosts = (id, headers) =>{
+    return useNuxtApp().$axiosApiClient.delete(`/api/costs/${id}`, {headers})
 }
 
 //Recipes

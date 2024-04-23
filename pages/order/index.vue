@@ -39,7 +39,7 @@
               <td>{{ project.total_amount }}</td>
               <td>{{ project.type_of_sale }}</td>
               <td>
-                <NuxtLink :to="`/edit/${project.id}`" class="btn btn-outline-success mx-1">Изменить</NuxtLink>
+                <NuxtLink :to="`/order/edit/${project.id}`" class="btn btn-outline-success mx-1">Изменить</NuxtLink>
               </td>
               <td>
                 <button @click="handleDelete(project.id)" className="btn btn-danger mx-1">Удалить</button>
@@ -50,15 +50,13 @@
       </div>
     </div>
   </section>
-
-
-
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 import SidebarLayout from '~/layouts/sidebar.vue'
 import NavbarLayout from '~/layouts/navbar.vue'
-import { getProjects } from '~/services/projectService'
+import { getProjects, deleteProject } from '~/services/projectService'
 
 
 export default {
@@ -109,6 +107,47 @@ export default {
           });
       } else {
         console.error('Trying to access localStorage on the server side.');
+      }
+    },
+    async handleDelete(projectId) {
+      const confirmResult = await Swal.fire({
+        title: 'Вы уверены?',
+        text: 'Вы действительно хотите удалить этот продукт?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Да, удалить!',
+        cancelButtonText: 'Отмена'
+      });
+
+      if (confirmResult.isConfirmed) {
+        const token = localStorage.getItem('token');
+        const headers = {
+          'Authorization': `Bearer ${token}`
+        };
+
+        try {
+          await deleteProject(projectId, headers);
+          // Успешно удалено
+          Swal.fire({
+            icon: 'success',
+            title: 'Продукт успешно удален!',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          // Обновляем список продуктов
+          this.fetchProjectList();
+        } catch (error) {
+          // Ошибка удаления
+          console.error('Error deleting product:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Ошибка удаления продукта!',
+            text: 'Пожалуйста, попробуйте еще раз.',
+            showConfirmButton: true,
+          });
+        }
       }
     }
   }

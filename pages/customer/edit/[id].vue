@@ -89,9 +89,6 @@ export default {
                 const headers = {
                     'Authorization': `Bearer ${this.token}`
                 };
-                console.log(this.project.id);
-                console.log(this.project);
-                console.log(headers);
                 await updateClient(this.project.id, this.project, headers);
                 Swal.fire({
                     icon: 'success',

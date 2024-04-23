@@ -9,12 +9,11 @@
     <div class="container2">
       <h2>Таблица затраты</h2>
       <div class="card-body order-table">
-        <NuxtLink to="/create" class="btn btn-primary btn-add">Добавить затраты</NuxtLink>
+        <NuxtLink to="/expense/create" class="btn btn-primary btn-add">Добавить затрат</NuxtLink>
         <table class="table table-bordered">
           <thead>
             <tr>
               <th>ID</th>
-              <th>Название продукта</th>
               <th>Описание</th>
               <th>Сумма</th>
               <th>Дата затраты</th>
@@ -25,12 +24,11 @@
           <tbody>
             <tr v-for="project in projects" :key="project.id">
               <td>{{ project.id }}</td>
-              <td>{{ project.id_product.name }}</td>
               <td>{{ project.description }}</td>
               <td>{{ project.amount }}</td>
               <td>{{ project.date }}</td>
               <td>
-                <NuxtLink :to="`/edit/${project.id}`" class="btn btn-outline-success mx-1">Изменить</NuxtLink>
+                <NuxtLink :to="`/expense/edit/${project.id}`" class="btn btn-outline-success mx-1">Изменить</NuxtLink>
               </td>
               <td>
                 <button @click="handleDelete(project.id)" className="btn btn-danger mx-1">Удалить</button>
@@ -49,8 +47,8 @@
 <script>
 import SidebarLayout from '~/layouts/sidebar.vue'
 import NavbarLayout from '~/layouts/navbar.vue'
-import { getCosts } from '~/services/projectService'
-
+import { getCosts, deleteCosts } from '~/services/projectService'
+import Swal from 'sweetalert2';
 
 export default {
   layout: 'sidebarLayout',
@@ -102,6 +100,48 @@ export default {
       } else {
         console.error('Trying to access localStorage on the server side.');
       }
+    },
+    async handleDelete(clientId) {
+      const confirmResult = await Swal.fire({
+        title: 'Вы уверены?',
+        text: 'Вы действительно хотите удалить этого затрата?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Да, удалить!',
+        cancelButtonText: 'Отмена'
+      });
+
+      if (confirmResult.isConfirmed) {
+        const token = localStorage.getItem('token');
+        const headers = {
+          'Authorization': `Bearer ${token}`
+        };
+
+        try {
+          await deleteCosts(clientId, headers);
+
+          // Успешно удалено
+          Swal.fire({
+            icon: 'success',
+            title: 'Затрат успешно удален!',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          // Обновляем список клиентов
+          this.fetchProjectList();
+        } catch (error) {
+          // Ошибка удаления
+          console.error('Error deleting client:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Ошибка удаления затрат!',
+            text: 'Пожалуйста, попробуйте еще раз.',
+            showConfirmButton: true,
+          });
+        }
+      }
     }
   }
 
@@ -121,6 +161,7 @@ export default {
 h2 {
   text-align: center;
 }
+
 .btn-add {
   margin-bottom: 10px;
 }

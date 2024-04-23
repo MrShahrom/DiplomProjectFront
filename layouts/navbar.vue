@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-light bg-color">
         <div class="container" style="padding-left: 160px;">
-            <a class="navbar-brand" href="#">Чавонони Сугд</a>
+            <a class="navbar-brand" href="#">Inventory Manegment</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -53,7 +53,7 @@ export default {
 }
 
 .bg-color {
-    background-color: #bed26e;
+    background-color: #6D38AF;
 }
 
 .navbar-brand {
@@ -66,7 +66,7 @@ export default {
 }
 
 .dropdown-menu {
-    background-color: #bed26e;
+    background-color: #6D38AF;
 }
 
 .dropdown-item {

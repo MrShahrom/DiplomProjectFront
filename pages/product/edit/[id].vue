@@ -18,13 +18,13 @@
         <div class="form-group">
           <label for="sklad">Склад</label>
           <select v-model="project.id_sklad" class="form-control form-select" id="sklad" name="sklad">
-            <option v-for="item in warehouses" :key="item.id" :value="item.id">{{ item.name }}</option>
+            <option v-for="item in warehouses" :key="item.id" :value="item.id">{{ item.id }}. {{ item.name }}</option>
           </select>
         </div>
         <div class="form-group">
           <label for="typeproduct">Тип продукта</label>
           <select v-model="project.id_type_product" class="form-control form-select" id="typeproduct" name="typeproduct">
-            <option v-for="item in productTypes" :key="item.id" :value="item.id">{{ item.product_name }}</option>
+            <option v-for="item in productTypes" :key="item.id" :value="item.id">{{ item.id }}. {{ item.product_name }}</option>
           </select>
         </div>
         <div class="form-group">
