@@ -1,15 +1,13 @@
 <template>
-    <SidebarLayout>
-    </SidebarLayout>
-  
-    <NavbarLayout>
-    </NavbarLayout>
-  
+  <div>
+    <SidebarLayout />
+    <NavbarLayout />
+
     <section>
       <div class="container2">
-        <h2>Таблица сырье</h2>
+        <h2>Таблица сырья</h2>
         <div class="card-body order-table">
-          <NuxtLink to="/create" class="btn btn-primary btn-add">Добавить сырье</NuxtLink>
+          <NuxtLink to="/rawmaterial/create" class="btn btn-primary btn-add">Добавить сырье</NuxtLink>
           <table class="table table-bordered">
             <thead>
               <tr>
@@ -38,10 +36,10 @@
                 <td>{{ project.description }}</td>
                 <td>{{ project.date }}</td>
                 <td>
-                  <NuxtLink :to="`/edit/${project.id}`" class="btn btn-outline-success mx-1">Изменить</NuxtLink>
+                  <NuxtLink :to="`/rawmaterial/edit/${project.id}`" class="btn btn-outline-success mx-1">Изменить</NuxtLink>
                 </td>
                 <td>
-                  <button @click="handleDelete(project.id)" className="btn btn-danger mx-1">Удалить</button>
+                  <button @click="handleDelete(project.id)" class="btn btn-danger mx-1">Удалить</button>
                 </td>
               </tr>
             </tbody>
@@ -49,87 +47,95 @@
         </div>
       </div>
     </section>
-  
-  
-  
-  </template>
-  
-  <script>
-  import SidebarLayout from '~/layouts/sidebar.vue'
-  import NavbarLayout from '~/layouts/navbar.vue'
-  import { getRawMaterials } from '~/services/projectService'
-  
-  
-  export default {
-    layout: 'sidebarLayout',
-    layout: 'navbarLayout',
-    components: {
-      SidebarLayout,
-      NavbarLayout,
-    },
-    data() {
-      return {
-        projects: []
-      };
-    },
-    created() {
-      if (process.client) {
-        this.fetchProjectList();
+  </div>
+</template>
+
+<script>
+import SidebarLayout from '~/layouts/sidebar.vue'
+import NavbarLayout from '~/layouts/navbar.vue'
+import { getRawMaterials, deleteRawMaterials } from '~/services/projectService'
+import Swal from 'sweetalert2'
+
+export default {
+  layout: 'sidebarLayout',
+  components: {
+    SidebarLayout,
+    NavbarLayout,
+  },
+  data() {
+    return {
+      projects: []
+    };
+  },
+  created() {
+    if (process.client) {
+      this.fetchProjectList();
+    }
+  },
+  methods: {
+    async fetchProjectList() {
+      try {
+        const token = localStorage.getItem('token');
+        const headers = { 'Authorization': `Bearer ${token}` };
+        const response = await getRawMaterials(headers);
+        this.projects = response.data.data;
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
       }
     },
-  
-    methods: {
-      fetchProjectList() {
-        if (process.client) {
-          const token = localStorage.getItem('token');
-          if (!token) {
-            console.error('Token not found in local storage');
-            return;
-          }
-  
-          const headers = {
-            'Authorization': `Bearer ${token}`
-          };
-  
-          getRawMaterials(headers)
-            .then(response => {
-              this.projects = response.data["data"];
-              console.log(response.data["data"])
-            })
-            .catch(error => {
-              if (error.response) {
-                console.error('Status code:', error.response.status);
-                console.error('Response data:', error.response.data);
-                console.error('Response headers:', error.response.headers);
-              } else if (error.request) {
-                console.error('No response received:', error.request);
-              } else {
-                console.error('Error setting up request:', error.message);
-              }
-            });
-        } else {
-          console.error('Trying to access localStorage on the server side.');
+    async handleDelete(projectId) {
+      const confirmResult = await Swal.fire({
+        title: 'Вы уверены?',
+        text: 'Вы действительно хотите удалить этот сырье?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Да, удалить!',
+        cancelButtonText: 'Отмена'
+      });
+
+      if (confirmResult.isConfirmed) {
+        const token = localStorage.getItem('token');
+        const headers = { 'Authorization': `Bearer ${token}` };
+        try {
+          await deleteRawMaterials(projectId, headers);
+          // Успешно удалено
+          Swal.fire({
+            icon: 'success',
+            title: 'Сырье успешно удален!',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          // Обновляем список сырья
+          this.fetchProjectList();
+        } catch (error) {
+          // Ошибка удаления
+          console.error('Error deleting rawmaterial:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Ошибка удаления сырья!',
+            text: 'Пожалуйста, попробуйте еще раз.',
+            showConfirmButton: true,
+          });
         }
       }
     }
-  
-  
-  };
-  </script>
-  
-  
-  
-  
-  <style scoped>
-  .container2 {
-    padding-left: 150px;
-    padding-top: 60px;
   }
-  
-  h2 {
-    text-align: center;
-  }
-  .btn-add {
-    margin-bottom: 10px;
-  }
-  </style>
+};
+</script>
+
+<style scoped>
+.container2 {
+  padding-left: 150px;
+  padding-top: 60px;
+}
+
+h2 {
+  text-align: center;
+}
+
+.btn-add {
+  margin-bottom: 10px;
+}
+</style>

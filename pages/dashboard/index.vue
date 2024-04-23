@@ -107,6 +107,32 @@
           </div>
         </div>
       </div>
+      <div class="row blocks">
+        <!-- Склады -->
+        <div class="col-lg-3 col-sm-6">
+          <div class="card btn-9 text-white">
+            <div class="card-body">
+              <h3 class="card-title">Склады</h3>
+              <p class="card-text">Количество</p>
+            </div>
+            <div class="card-footer">
+              <nuxt-link to="/sklad" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
+            </div>
+          </div>
+        </div>
+        <!--  -->
+        <div class="col-lg-3 col-sm-6">
+          <div class="card btn-10 text-white">
+            <div class="card-body">
+              <h3 class="card-title">Отчеты</h3>
+              <p class="card-text">Количество</p>
+            </div>
+            <div class="card-footer">
+              <nuxt-link to="/expense" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
   </section>
@@ -223,5 +249,13 @@ export default {
 
 .btn-8 {
   background-color: #b74095;
+}
+
+.btn-9 {
+  background-color: #4040b7;
+}
+
+.btn-10 {
+  background-color: #76a254;
 }
 </style>

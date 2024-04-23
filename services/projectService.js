@@ -60,34 +60,34 @@ export const deleteCosts = (id, headers) =>{
 export const getRecipes = (headers) =>{
     return useNuxtApp().$axiosApiClient.get('/api/recipes', {headers})
 }    
-export const getRecipe = (id) =>{
-    return useNuxtApp().$axiosApiClient.get(`/api/recipes/${id}`)
+export const getRecipe = (id, headers) =>{
+    return useNuxtApp().$axiosApiClient.get(`/api/recipes/${id}`, {headers})
 }   
-export const createRecipes = (project) =>{
-    return useNuxtApp().$axiosApiClient.post('/api/recipes', project)
+export const createRecipes = (project, headers) =>{
+    return useNuxtApp().$axiosApiClient.post('/api/recipes', project, {headers})
 }   
-export const updateRecipes = (id, project) =>{
-    return useNuxtApp().$axiosApiClient.patch(`/api/recipes/${id}`, project)
+export const updateRecipes = (id, project, headers) =>{
+    return useNuxtApp().$axiosApiClient.patch(`/api/recipes/${id}`, project, {headers})
 } 
-export const deleteRecipes = (id) =>{
-    return useNuxtApp().$axiosApiClient.delete(`/api/recipes/${id}`)
+export const deleteRecipes = (id, headers) =>{
+    return useNuxtApp().$axiosApiClient.delete(`/api/recipes/${id}`, {headers})
 }
 
 //RawMaterials
 export const getRawMaterials = (headers) =>{
     return useNuxtApp().$axiosApiClient.get('/api/rawmaterials', {headers})
 }    
-export const getRawMaterial = (id) =>{
-    return useNuxtApp().$axiosApiClient.get(`/api/rawmaterials/${id}`)
+export const getRawMaterial = (id, headers) =>{
+    return useNuxtApp().$axiosApiClient.get(`/api/rawmaterials/${id}`, {headers})
 }   
-export const createRawMaterials = (project) =>{
-    return useNuxtApp().$axiosApiClient.post('/api/rawmaterials', project)
+export const createRawMaterials = (project, headers) =>{
+    return useNuxtApp().$axiosApiClient.post('/api/rawmaterials', project, {headers})
 }   
-export const updateRawMaterials = (id, project) =>{
-    return useNuxtApp().$axiosApiClient.patch(`/api/rawmaterials/${id}`, project)
+export const updateRawMaterials = (id, project, headers) =>{
+    return useNuxtApp().$axiosApiClient.patch(`/api/rawmaterials/${id}`, project, {headers})
 } 
-export const deleteRawMaterials = (id) =>{
-    return useNuxtApp().$axiosApiClient.delete(`/api/rawmaterials/${id}`)
+export const deleteRawMaterials = (id, headers) =>{
+    return useNuxtApp().$axiosApiClient.delete(`/api/rawmaterials/${id}`, {headers})
 }
 
 //import axios,{ AxiosRequestConfig } from 'axios';
