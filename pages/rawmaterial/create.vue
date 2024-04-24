@@ -22,11 +22,11 @@
                 </div>
                 <div class="form-group">
                     <label for="purchase_price">Цена</label>
-                    <input v-model="project.purchase_price" type="text" class="form-control" id="purchase_price"
-                        name="purchase_price" />
+                    <input v-model="project.purchase_price" type="number" step="0.2" class="form-control"
+                        id="purchase_price" name="purchase_price" />
                 </div>
                 <div class="form-group">
-                    <label for="units_of_measurement">Ед. из. (сомони)</label>
+                    <label for="units_of_measurement">Валюта</label>
                     <input v-model="project.units_of_measurement" type="text" class="form-control"
                         id="units_of_measurement" name="units_of_measurement" />
                 </div>
@@ -45,8 +45,9 @@
                 </div>
                 <div class="form-group">
                     <label for="date">Дата прихода</label>
-                    <input v-model="project.date" type="datetime-local" value="2024-03-24T20:36:00" step="1"
-                        class="form-control" id="date" name="date" />
+                    <input v-model="project.date" type="datetime-local" step="1" class="form-control" id="date"
+                        name="date" />
+
                 </div>
                 <div class="form-group">
                     <label for="status">Статус</label>
@@ -84,9 +85,22 @@ export default {
         };
     },
     mounted() {
-        // Получаем токен из localStorage
         this.token = localStorage.getItem('token');
         this.fetchData();
+    },
+    computed: {
+        formattedDate() {
+            if (!this.project.date) return ''; // Проверка на случай пустой даты
+            const date = new Date(this.project.date);
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            const seconds = String(date.getSeconds()).padStart(2, '0');
+
+            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        }
     },
     methods: {
         async fetchData() {
@@ -94,7 +108,6 @@ export default {
                 const headers = {
                     'Authorization': `Bearer ${this.token}`
                 };
-                // Получаем данные о клиентах и продуктах с передачей токена
                 const [suppliers] = await Promise.all([
                     getSuppliers(headers),
                 ]);
@@ -104,25 +117,14 @@ export default {
                 console.error('Failed to fetch data:', error);
             }
         },
-        formatDate(dateTime) {
-            const date = new Date(dateTime);
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            const hours = String(date.getHours()).padStart(2, '0');
-            const minutes = String(date.getMinutes()).padStart(2, '0');
-            const seconds = String(date.getSeconds()).padStart(2, '0');
-
-            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-        },
 
         async handleSave() {
             try {
-                const formattedDate = this.formatDate(this.project.date);
-                this.project.date = formattedDate; // Исправление здесь
-
                 this.isSaving = true;
-                // Передаем токен при создании сырья
+                // Форматирование даты
+                const formattedDate = this.formattedDate;
+                this.project.date = formattedDate;
+                console.log(this.project.date)
                 const headers = {
                     'Authorization': `Bearer ${this.token}`
                 };
@@ -134,7 +136,6 @@ export default {
                     timer: 1500
                 });
                 this.isSaving = false;
-                // Очищаем данные формы после сохранения
                 this.project = {
                     name: '',
                     unit: '',

@@ -25,7 +25,7 @@
                         name="purchase_price" />
                 </div>
                 <div class="form-group">
-                    <label for="units_of_measurement">Ед. из. (сомони)</label>
+                    <label for="units_of_measurement">Валюта</label>
                     <input v-model="project.units_of_measurement" type="text" class="form-control"
                         id="units_of_measurement" name="units_of_measurement" />
                 </div>
@@ -44,8 +44,9 @@
                 </div>
                 <div class="form-group">
                     <label for="date">Дата прихода</label>
-                    <input v-model="project.date" type="datetime-local" value="2024-03-24T20:36:00" step="1"
-                        class="form-control" id="date" name="date" />
+                    <input v-model="project.date" type="datetime-local" step="1" class="form-control" id="date"
+                        name="date" />
+
                 </div>
                 <div class="form-group">
                     <label for="status">Статус</label>

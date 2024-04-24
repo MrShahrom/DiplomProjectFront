@@ -21,6 +21,7 @@
         <li><nuxt-link to="/recipe"><i class="fas fa-book"></i> <span>Рецепты</span></nuxt-link></li>
         <li><nuxt-link to="/rawmaterial"><i class="fa fa-seedling"></i> <span>Сырье</span></nuxt-link></li>
         <li><nuxt-link to="/sklad"><i class="fas fa-warehouse"></i> <span>Склады</span></nuxt-link></li>
+        <li><nuxt-link to="/otchet"><i class="fas fa-file-alt"></i> <span>Отчеты</span></nuxt-link></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>

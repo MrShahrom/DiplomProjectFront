@@ -159,15 +159,35 @@ export const getSklads = (token) => {
         }
     });
 };   
-export const getTySklad = (id) =>{
-    return useNuxtApp().$axiosApiClient.get(`/api/sklads/${id}`)
-}   
-export const createSklad = (project) =>{
-    return useNuxtApp().$axiosApiClient.post('/api/sklads', project)
-}   
-export const updateSklad = (id, project) =>{
-    return useNuxtApp().$axiosApiClient.patch(`/api/sklads/${id}`, project)
+export const getTySkladall = (headers) =>{
+    return useNuxtApp().$axiosApiClient.get(`/api/sklads/`, { headers })
 } 
-export const deleteSklad = (id) =>{
-    return useNuxtApp().$axiosApiClient.delete(`/api/sklads/${id}`)
+export const getTySklad = (id, headers) =>{
+    return useNuxtApp().$axiosApiClient.get(`/api/sklads/${id}`, { headers })
+}   
+export const createSklad = (project, headers) =>{
+    return useNuxtApp().$axiosApiClient.post('/api/sklads', project, { headers })
+}   
+export const updateSklad = (id, project, headers) =>{
+    return useNuxtApp().$axiosApiClient.patch(`/api/sklads/${id}`, project, { headers })
+} 
+export const deleteSklad = (id, headers) =>{
+    return useNuxtApp().$axiosApiClient.delete(`/api/sklads/${id}`, { headers })
+}
+
+// //Отчеты
+// export const getOtchet = (project, headers) =>{
+//     console.log(project, headers)
+//     return useNuxtApp().$axiosApiClient.get(`/api/products/calculate-cost`, project, { headers })
+// }  
+export const getOtchet = (productId, token) => {
+    const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
+    };
+
+    const formData = new URLSearchParams();
+    formData.append('productId', productId);
+
+    return useNuxtApp().$axiosApiClient.post(`/api/products/calculate-cost`, formData, { headers });
 }

@@ -120,7 +120,7 @@
             </div>
           </div>
         </div>
-        <!--  -->
+        <!-- Отчеты -->
         <div class="col-lg-3 col-sm-6">
           <div class="card btn-10 text-white">
             <div class="card-body">
@@ -128,7 +128,7 @@
               <p class="card-text">Количество</p>
             </div>
             <div class="card-footer">
-              <nuxt-link to="/expense" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
+              <nuxt-link to="/otchet" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
             </div>
           </div>
         </div>
@@ -228,7 +228,7 @@ export default {
 }
 
 .btn-3 {
-  background-color: #f39c12;
+  background-color: #b74095;
 }
 
 .btn-4 {
@@ -244,11 +244,11 @@ export default {
 }
 
 .btn-7 {
-  background-color: #337ab7;
+  background-color: #808000;
 }
 
 .btn-8 {
-  background-color: #b74095;
+  background-color: #f39c12;
 }
 
 .btn-9 {
@@ -256,6 +256,6 @@ export default {
 }
 
 .btn-10 {
-  background-color: #76a254;
+  background-color: #388bc6;
 }
 </style>

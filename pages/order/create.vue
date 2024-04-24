@@ -27,7 +27,7 @@
                         id="date_of_shipment" name="date_of_shipment" />
                 </div>
                 <div class="form-group">
-                    <label for="units_of_measurement">Ед. измерения (сомони)</label>
+                    <label for="units_of_measurement">Валюта</label>
                     <input v-model="project.units_of_measurement" type="text" class="form-control"
                         id="units_of_measurement" name="units_of_measurement" />
                 </div>
