@@ -10,6 +10,7 @@
       <h2>Таблица заказов</h2>
       <div class="card-body order-table">
         <NuxtLink to="/order/create" class="btn btn-primary btn-add">Добавить заказ</NuxtLink>
+        <button @click="handleExport()" class="btn btn-success btn-add btn-export">Экспорт в excel</button>
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -57,11 +58,10 @@ import Swal from 'sweetalert2'
 import SidebarLayout from '~/layouts/sidebar.vue'
 import NavbarLayout from '~/layouts/navbar.vue'
 import { getProjects, deleteProject } from '~/services/projectService'
-
+import * as XLSX from 'xlsx';
 
 export default {
   layout: 'sidebarLayout',
-  layout: 'navbarLayout',
   components: {
     SidebarLayout,
     NavbarLayout,
@@ -109,6 +109,95 @@ export default {
         console.error('Trying to access localStorage on the server side.');
       }
     },
+
+    async handleExport() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error('Token not found in local storage');
+        return;
+      }
+
+      const headers = {
+        'Authorization': `Bearer ${token}`
+      };
+      try {
+        // Получаем данные о проектах
+        const response = await getProjects(headers);
+
+        // Проверяем, есть ли данные
+        if (response && response.data && response.data.data) {
+          // Создаем новый экземпляр книги
+          const workbook = XLSX.utils.book_new();
+
+          // Создаем массив данных для таблицы
+          const tableData = response.data.data.map(project => ({
+            'ID': project.id,
+            'ФИО': `${project.id_client.lastname} ${project.id_client.firstname} ${project.id_client.patronymic}`,
+            'Продукт': project.id_product.name,
+            'Дата заказа': project.date_of_shipment,
+            'Цена': project.price_per_unit,
+            'Валюта': project.units_of_measurement,
+            'Количество': project.quantity,
+            'Общ. сумма': project.total_amount,
+            'Тип заказа': project.type_of_sale
+          }));
+
+          // Создаем новый лист
+          const worksheet = XLSX.utils.json_to_sheet(tableData);
+
+          // Добавляем лист в книгу
+          XLSX.utils.book_append_sheet(workbook, worksheet, 'Заказы');
+
+          // Создаем файл Excel в формате array
+          const excelArray = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+
+          // Преобразуем массив байтов в объект Blob
+          const excelBlob = new Blob([excelArray], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+          // Создаем ссылку для скачивания файла
+          const url = window.URL.createObjectURL(excelBlob);
+
+          // Создаем ссылку для скачивания файла
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'orders.xlsx'; // Указываем имя файла
+          document.body.appendChild(link);
+
+          // Симулируем клик по ссылке для скачивания файла
+          link.click();
+
+          // Освобождаем объект URL
+          window.URL.revokeObjectURL(url);
+
+          // Оповещаем пользователя об успешном экспорте
+          Swal.fire({
+            icon: 'success',
+            title: 'Данные успешно экспортированы в Excel!',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        } else {
+          // Оповещаем пользователя, если нет данных для экспорта
+          Swal.fire({
+            icon: 'warning',
+            title: 'Нет данных для экспорта!',
+            text: 'Пожалуйста, добавьте данные перед экспортом.',
+            showConfirmButton: true
+          });
+        }
+      } catch (error) {
+        // Обрабатываем ошибку, если произошла ошибка при получении данных
+        console.error('Error exporting data to Excel:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Ошибка экспорта данных!',
+          text: 'Пожалуйста, попробуйте еще раз.',
+          showConfirmButton: true
+        });
+      }
+    },
+
+
     async handleDelete(projectId) {
       const confirmResult = await Swal.fire({
         title: 'Вы уверены?',
@@ -151,11 +240,8 @@ export default {
       }
     }
   }
-
-
 };
 </script>
-
 
 
 
@@ -168,7 +254,12 @@ export default {
 h2 {
   text-align: center;
 }
+
 .btn-add {
   margin-bottom: 10px;
+}
+
+.btn-export {
+  margin-left: 10px;
 }
 </style>

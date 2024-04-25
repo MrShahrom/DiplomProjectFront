@@ -124,7 +124,6 @@ export default {
                 // Форматирование даты
                 const formattedDate = this.formattedDate;
                 this.project.date = formattedDate;
-                console.log(this.project.date)
                 const headers = {
                     'Authorization': `Bearer ${this.token}`
                 };

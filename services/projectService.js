@@ -175,11 +175,7 @@ export const deleteSklad = (id, headers) =>{
     return useNuxtApp().$axiosApiClient.delete(`/api/sklads/${id}`, { headers })
 }
 
-// //Отчеты
-// export const getOtchet = (project, headers) =>{
-//     console.log(project, headers)
-//     return useNuxtApp().$axiosApiClient.get(`/api/products/calculate-cost`, project, { headers })
-// }  
+//Отчеты
 export const getOtchet = (productId, token) => {
     const headers = {
         'Authorization': `Bearer ${token}`,
@@ -191,3 +187,5 @@ export const getOtchet = (productId, token) => {
 
     return useNuxtApp().$axiosApiClient.post(`/api/products/calculate-cost`, formData, { headers });
 }
+
+//Экспорт в excel Order
