@@ -188,4 +188,35 @@ export const getOtchet = (productId, token) => {
     return useNuxtApp().$axiosApiClient.post(`/api/products/calculate-cost`, formData, { headers });
 }
 
-//Экспорт в excel Order
+//Количество объектов
+export const getCountCosts = (headers) =>{
+    return useNuxtApp().$axiosApiClient.get('/api/count/costs', {headers})
+}    
+export const getCountRecipes = (headers) =>{
+    return useNuxtApp().$axiosApiClient.get('/api/count/recipes', {headers})
+}    
+export const getCountClients = (headers) =>{
+    return useNuxtApp().$axiosApiClient.get('/api/count/clients', {headers})
+}    
+export const getCountEmployees = (headers) =>{
+    return useNuxtApp().$axiosApiClient.get('/api/count/employees', {headers})
+}    
+export const getCountOrders = (headers) =>{
+    return useNuxtApp().$axiosApiClient.get('/api/count/orders', {headers})
+}    
+export const getCountProducts = (headers) =>{
+    return useNuxtApp().$axiosApiClient.get('/api/count/products', {headers})
+}    
+export const getCountRawMaterials = (headers) =>{
+    return useNuxtApp().$axiosApiClient.get('/api/count/rawmaterials', {headers})
+}    
+export const getCountSklads = (headers) =>{
+    return useNuxtApp().$axiosApiClient.get('/api/count/sklads', {headers})
+}    
+export const getCountSuppliers = (headers) =>{
+    return useNuxtApp().$axiosApiClient.get('/api/count/suppliers', {headers})
+}    
+export const getCountTypeProducts = (headers) =>{
+    return useNuxtApp().$axiosApiClient.get('/api/count/typeproducts', {headers})
+}    
+    

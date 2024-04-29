@@ -13,7 +13,7 @@
           <div class="card btn-2 text-white">
             <div class="card-body">
               <h3 class="card-title">Тип продукты</h3>
-              <p class="card-text">Количество</p>
+              <h4 class="card-text">кол. {{ typeProductsCount }}</h4>
             </div>
             <div class="card-footer">
               <nuxt-link to="/typeproduct" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
@@ -25,7 +25,7 @@
           <div class="card btn-1 text-white">
             <div class="card-body">
               <h3 class="card-title">Продукты</h3>
-              <p class="card-text">Количество</p>
+              <h4 class="card-text">{{ productsCount }}</h4>
             </div>
             <div class="card-footer">
               <nuxt-link to="/product" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
@@ -37,7 +37,7 @@
           <div class="card btn-4 text-white">
             <div class="card-body">
               <h3 class="card-title">Клиенты</h3>
-              <p class="card-text">Количество</p>
+              <h4 class="card-text">{{ clientsCount }}</h4>
             </div>
             <div class="card-footer">
               <nuxt-link to="/customer" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
@@ -49,7 +49,7 @@
           <div class="card btn-3 text-white">
             <div class="card-body">
               <h3 class="card-title">Поставщики</h3>
-              <p class="card-text">Количество</p>
+              <h4 class="card-text">{{ suppliersCount }}</h4>
             </div>
             <div class="card-footer">
               <nuxt-link to="/supplier" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
@@ -63,7 +63,7 @@
           <div class="card btn-5 text-white">
             <div class="card-body">
               <h3 class="card-title">Заказы</h3>
-              <p class="card-text">Количество</p>
+              <h4 class="card-text">{{ordersCount}}</h4>
             </div>
             <div class="card-footer">
               <nuxt-link to="/order" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
@@ -75,7 +75,7 @@
           <div class="card btn-6 text-white">
             <div class="card-body">
               <h3 class="card-title">Затраты</h3>
-              <p class="card-text">Количество</p>
+              <h4 class="card-text">{{costsCount}}</h4>
             </div>
             <div class="card-footer">
               <nuxt-link to="/expense" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
@@ -87,7 +87,7 @@
           <div class="card btn-7 text-white">
             <div class="card-body">
               <h3 class="card-title">Рецепты</h3>
-              <p class="card-text">Количество</p>
+              <h4 class="card-text">{{recipesCount}}</h4>
             </div>
             <div class="card-footer">
               <nuxt-link to="/recipe" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
@@ -99,7 +99,7 @@
           <div class="card btn-8 text-white">
             <div class="card-body">
               <h3 class="card-title">Сырье</h3>
-              <p class="card-text">Количество</p>
+              <h4 class="card-text">{{rawMaterialsCount}}</h4>
             </div>
             <div class="card-footer">
               <nuxt-link to="/rawmaterial" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
@@ -113,7 +113,7 @@
           <div class="card btn-9 text-white">
             <div class="card-body">
               <h3 class="card-title">Склады</h3>
-              <p class="card-text">Количество</p>
+              <h4 class="card-text">{{skladsCount}}</h4>
             </div>
             <div class="card-footer">
               <nuxt-link to="/sklad" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
@@ -125,7 +125,7 @@
           <div class="card btn-10 text-white">
             <div class="card-body">
               <h3 class="card-title">Отчеты</h3>
-              <p class="card-text">Количество</p>
+              <h4 class="card-text">Количество</h4>
             </div>
             <div class="card-footer">
               <nuxt-link to="/otchet" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
@@ -142,7 +142,7 @@
 <script>
 import SidebarLayout from '~/layouts/sidebar.vue'
 import NavbarLayout from '~/layouts/navbar.vue'
-import { getProjects } from '~/services/projectService'
+import { getProjects, getCountProducts, getCountClients, getCountSuppliers, getCountTypeProducts, getCountOrders, getCountRecipes, getCountCosts, getCountRawMaterials, getCountSklads,  } from '~/services/projectService'
 
 
 export default {
@@ -154,16 +154,91 @@ export default {
   },
   data() {
     return {
-      projects: []
+      projects: [],
+      productsCount: 0,
+      clientsCount: 0,
+      suppliersCount: 0,
+      typeProductsCount: 0,
+      ordersCount: 0,
+      recipesCount: 0,
+      costsCount: 0,
+      rawMaterialsCount: 0,
+      skladsCount: 0,
     };
   },
   created() {
     if (process.client) {
       this.fetchProjectList();
+      this.fetchCounts();
     }
   },
   
   methods: {
+    fetchCounts() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error('Token not found in local storage');
+        return;
+      }
+      const headers = {
+        'Authorization': `Bearer ${token}`
+      };
+
+      getCountProducts(headers).then(response => {
+        this.productsCount = response.data.count;
+      }).catch(error => {
+        console.error('Error fetching products count:', error);
+      });
+
+      getCountClients(headers).then(response => {
+        this.clientsCount = response.data.count;
+      }).catch(error => {
+        console.error('Error fetching clients count:', error);
+      });
+
+      getCountSuppliers(headers).then(response => {
+        this.suppliersCount = response.data.count;
+      }).catch(error => {
+        console.error('Error fetching suppliers count:', error);
+      });
+
+      getCountTypeProducts(headers).then(response => {
+        this.typeProductsCount = response.data.count;
+      }).catch(error => {
+        console.error('Error fetching type products count:', error);
+      });
+
+      getCountOrders(headers).then(response => {
+        this.ordersCount = response.data.count;
+      }).catch(error => {
+        console.error('Error fetching orders count:', error);
+      });
+
+      getCountRecipes(headers).then(response => {
+        this.recipesCount = response.data.count;
+      }).catch(error => {
+        console.error('Error fetching recipes count:', error);
+      });
+
+      getCountCosts(headers).then(response => {
+        this.costsCount = response.data.count;
+      }).catch(error => {
+        console.error('Error fetching costs count:', error);
+      });
+
+      getCountRawMaterials(headers).then(response => {
+        this.rawMaterialsCount = response.data.count;
+      }).catch(error => {
+        console.error('Error fetching raw material count:', error);
+      });
+
+      getCountSklads(headers).then(response => {
+        this.skladsCount = response.data.count;
+      }).catch(error => {
+        console.error('Error fetching sklads count:', error);
+      });
+    },
+
   fetchProjectList() {
     if (process.client) {
       const token = localStorage.getItem('token');
