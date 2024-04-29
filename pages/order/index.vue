@@ -91,9 +91,10 @@ export default {
         };
 
         getProjects(headers)
-          .then(response => {
-            this.projects = response.data["data"];
-          })
+        .then(response => {
+          // Сортируем заказы по дате в обратном порядке
+          this.projects = response.data["data"].sort((a, b) => new Date(b.date_of_shipment) - new Date(a.date_of_shipment));
+        })
           .catch(error => {
             if (error.response) {
               console.error('Status code:', error.response.status);

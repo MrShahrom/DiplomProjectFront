@@ -1,44 +1,34 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-light bg-color">
         <div class="container" style="padding-left: 160px;">
-            <a class="navbar-brand" href="#">Inventory Manegment</a>
+            <a class="navbar-brand" href="#">Inventory Management</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto">
-                    <!-- User profile dropdown -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-user"></i>
-                            User
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#" @click="logout">Logout</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+
+            <button @click="logout" class="btn btn-warning">Выйти</button>
         </div>
     </nav>
+
 </template>
+
+
 
 <script>
 export default {
     methods: {
-        logout() {
+        logout(event) {
+            event.preventDefault(); // Отменяем стандартное поведение ссылки
             localStorage.removeItem('token');
-            window.location.href = '/';
+            window.location.href = '/login';
         }
     }
 }
 </script>
+
+
 
 <style scoped>
 .container {
