@@ -16,6 +16,7 @@
             <tr>
               <th>ID</th>
               <th>Название</th>
+              <th>Рисунок</th>
               <th>Цена продажи</th>
               <th>Склад</th>
               <th>Тип продукта</th>
@@ -29,6 +30,7 @@
             <tr v-for="project in projects" :key="project.id">
               <td>{{ project.id }}</td>
               <td>{{ project.name }}</td>
+              <td><img :src="project.image" alt="Project Image" style="max-width: 100px; max-height: 100px;"></td>
               <td>{{ project.selling_price }}</td>
               <td>{{ project.id_sklad.name }}</td>
               <td>{{ project.id_type_product.product_name }}</td>
@@ -91,6 +93,12 @@ export default {
         getProducts(headers)
           .then(response => {
             this.projects = response.data["data"];
+            // Обновляем URL изображений
+            this.projects.forEach((elem) => {
+              // if (elem.image != null) {
+              //   elem.image = "/storage/" + elem.image;
+              // }
+            });
           })
           .catch(error => {
             console.error('Error fetching project list:', error);
@@ -243,6 +251,7 @@ export default {
 h2 {
   text-align: center;
 }
+
 .btn-add {
   margin-bottom: 10px;
 }

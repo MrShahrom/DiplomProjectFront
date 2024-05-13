@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-light bg-color">
         <div class="container" style="padding-left: 160px;">
-            <a class="navbar-brand" href="#">Inventory Management</a>
+            <a class="navbar-brand" href="#">ҶДММ "Ҷавонони Суғд"</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">

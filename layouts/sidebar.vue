@@ -5,7 +5,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel" id="user-panel">
         <div class="pull-left info">
-          <p>Dashboard</p>
+          <h3>Главная</h3>
           <!-- <p>{{ username }}</p> -->
         </div>
       </div>

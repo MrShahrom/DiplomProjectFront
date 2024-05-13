@@ -12,8 +12,8 @@
         <div class="col-lg-3 col-sm-6">
           <div class="card btn-2 text-white">
             <div class="card-body">
+              <h2 class="card-text bold">{{ typeProductsCount }}</h2>
               <h3 class="card-title">Тип продукты</h3>
-              <h4 class="card-text">кол. {{ typeProductsCount }}</h4>
             </div>
             <div class="card-footer">
               <nuxt-link to="/typeproduct" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
@@ -24,8 +24,8 @@
         <div class="col-lg-3 col-sm-6">
           <div class="card btn-1 text-white">
             <div class="card-body">
+              <h2 class="card-text">{{ productsCount }}</h2>
               <h3 class="card-title">Продукты</h3>
-              <h4 class="card-text">{{ productsCount }}</h4>
             </div>
             <div class="card-footer">
               <nuxt-link to="/product" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
@@ -36,8 +36,8 @@
         <div class="col-lg-3 col-sm-6">
           <div class="card btn-4 text-white">
             <div class="card-body">
+              <h2 class="card-text">{{ clientsCount }}</h2>
               <h3 class="card-title">Клиенты</h3>
-              <h4 class="card-text">{{ clientsCount }}</h4>
             </div>
             <div class="card-footer">
               <nuxt-link to="/customer" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
@@ -48,8 +48,8 @@
         <div class="col-lg-3 col-sm-6">
           <div class="card btn-3 text-white">
             <div class="card-body">
+              <h2 class="card-text">{{ suppliersCount }}</h2>
               <h3 class="card-title">Поставщики</h3>
-              <h4 class="card-text">{{ suppliersCount }}</h4>
             </div>
             <div class="card-footer">
               <nuxt-link to="/supplier" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
@@ -62,8 +62,8 @@
         <div class="col-lg-3 col-sm-6">
           <div class="card btn-5 text-white">
             <div class="card-body">
+              <h2 class="card-text">{{ordersCount}}</h2>
               <h3 class="card-title">Заказы</h3>
-              <h4 class="card-text">{{ordersCount}}</h4>
             </div>
             <div class="card-footer">
               <nuxt-link to="/order" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
@@ -74,8 +74,8 @@
         <div class="col-lg-3 col-sm-6">
           <div class="card btn-6 text-white">
             <div class="card-body">
+              <h2 class="card-text">{{costsCount}}</h2>
               <h3 class="card-title">Затраты</h3>
-              <h4 class="card-text">{{costsCount}}</h4>
             </div>
             <div class="card-footer">
               <nuxt-link to="/expense" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
@@ -86,8 +86,8 @@
         <div class="col-lg-3 col-sm-6">
           <div class="card btn-7 text-white">
             <div class="card-body">
+              <h2 class="card-text">{{recipesCount}}</h2>
               <h3 class="card-title">Рецепты</h3>
-              <h4 class="card-text">{{recipesCount}}</h4>
             </div>
             <div class="card-footer">
               <nuxt-link to="/recipe" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
@@ -98,8 +98,8 @@
         <div class="col-lg-3 col-sm-6">
           <div class="card btn-8 text-white">
             <div class="card-body">
+              <h2 class="card-text">{{rawMaterialsCount}}</h2>
               <h3 class="card-title">Сырье</h3>
-              <h4 class="card-text">{{rawMaterialsCount}}</h4>
             </div>
             <div class="card-footer">
               <nuxt-link to="/rawmaterial" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
@@ -112,8 +112,8 @@
         <div class="col-lg-3 col-sm-6">
           <div class="card btn-9 text-white">
             <div class="card-body">
+              <h2 class="card-text">{{skladsCount}}</h2>
               <h3 class="card-title">Склады</h3>
-              <h4 class="card-text">{{skladsCount}}</h4>
             </div>
             <div class="card-footer">
               <nuxt-link to="/sklad" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>
@@ -124,8 +124,8 @@
         <div class="col-lg-3 col-sm-6">
           <div class="card btn-10 text-white">
             <div class="card-body">
+              <h2 class="card-text">0</h2>
               <h3 class="card-title">Отчеты</h3>
-              <h4 class="card-text">Количество</h4>
             </div>
             <div class="card-footer">
               <nuxt-link to="/otchet" class="btn btn-light">Больше <i class="fa fa-arrow-circle-right"></i></nuxt-link>

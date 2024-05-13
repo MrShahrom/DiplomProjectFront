@@ -11,6 +11,13 @@
           <input v-model="project.name" type="text" class="form-control" id="name" name="name" />
         </div>
         <div class="form-group">
+          <label for="image">Рисунок</label>
+          <input type="file" @change="handleImageChange" class="form-control" id="image" name="image"
+            accept="image/*" />
+          <!-- Предполагается, что вы будете отображать предварительное изображение -->
+          <img :src="imagePreview" v-if="imagePreview" alt="Preview" style="max-width: 100%; margin-top: 10px;" />
+        </div>
+        <div class="form-group">
           <label for="sellingprice">Цена продажи</label>
           <input v-model="project.selling_price" type="number" class="form-control" id="sellingprice"
             name="sellingprice" />
@@ -23,8 +30,10 @@
         </div>
         <div class="form-group">
           <label for="typeproduct">Тип продукта</label>
-          <select v-model="project.id_type_product" class="form-control form-select" id="typeproduct" name="typeproduct">
-            <option v-for="item in productTypes" :key="item.id" :value="item.id">{{ item.id }}. {{ item.product_name }}</option>
+          <select v-model="project.id_type_product" class="form-control form-select" id="typeproduct"
+            name="typeproduct">
+            <option v-for="item in productTypes" :key="item.id" :value="item.id">{{ item.id }}. {{ item.product_name }}
+            </option>
           </select>
         </div>
         <div class="form-group">
@@ -44,7 +53,6 @@
   </div>
 </template>
 
-// create.vue
 <script>
 import Swal from 'sweetalert2';
 import { createProduct, getSklads, getTypeProducts } from '~/services/projectService';
@@ -54,6 +62,7 @@ export default {
     return {
       project: {
         name: '',
+        image: null,
         selling_price: '',
         id_sklad: '',
         id_type_product: '',
@@ -63,7 +72,8 @@ export default {
       isSaving: false,
       warehouses: [],
       productTypes: [],
-      token: '' // Добавляем свойство для хранения токена
+      token: '', // Добавляем свойство для хранения токена
+      imagePreview: null
     };
   },
   mounted() {
@@ -90,14 +100,49 @@ export default {
       }
     },
 
+    handleImageChange(event) {
+      const file = event.target.files[0];
+      if (file) {
+        // Создаем объект FileReader
+        const reader = new FileReader();
+
+        // Обработчик загрузки файла
+        reader.onload = (e) => {
+          // Устанавливаем предварительный просмотр изображения
+          this.imagePreview = e.target.result;
+        };
+
+        // Читаем файл как URL-адрес данных
+        reader.readAsDataURL(file);
+
+        // Сохраняем файл в переменной проекта
+        this.project.image = file;
+      }
+    },
+
     async handleSave() {
       try {
         this.isSaving = true;
-        // Передаем токен при создании продукта\
+        // Создаем объект FormData для отправки данных формы
+        const formData = new FormData();
+        // Добавляем поля данных формы
+        formData.append('name', this.project.name);
+        formData.append('image', this.project.image);
+        formData.append('selling_price', this.project.selling_price);
+        formData.append('id_sklad', this.project.id_sklad);
+        formData.append('id_type_product', this.project.id_type_product);
+        formData.append('quantity', this.project.quantity);
+        formData.append('status', this.project.status);
+
+        // Передаем токен при создании продукта
         const headers = {
-          'Authorization': `Bearer ${this.token}`
+          'Authorization': `Bearer ${this.token}`,
+          'Content-Type': 'multipart/form-data' // Устанавливаем заголовок Content-Type
         };
-        await createProduct(this.project, headers);
+
+        // Отправляем данные формы с изображением
+        await createProduct(formData, headers);
+
         Swal.fire({
           icon: 'success',
           title: 'Продукт успешно сохранен!',
@@ -124,6 +169,7 @@ export default {
         this.isSaving = false;
       }
     },
+
   },
 };
 </script>

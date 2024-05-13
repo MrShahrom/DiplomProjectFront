@@ -13,7 +13,11 @@
                 </div>
                 <div class="form-group">
                     <label for="unit">Ед. из. (кг)</label>
-                    <input v-model="project.unit" type="text" class="form-control" id="unit" name="unit" />
+                    <select v-model="project.unit" class="form-control" id="unit" name="unit">
+                        <option value="кг">кг</option>
+                        <option value="г">грамм</option>
+                        <option value="т">тонна</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="quantity">Количество</label>
