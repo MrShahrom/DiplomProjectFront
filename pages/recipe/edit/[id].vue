@@ -10,7 +10,7 @@
                     <label for="id_type_product">Название тип продукта</label>
                     <select v-model="project.id_type_product" class="form-control form-select" id="id_type_product"
                         name="id_type_product">
-                        <option v-for="item in typeproducts" :key="item.id" :value="item.id">{{ item.id }}. {{ item.name }}
+                        <option v-for="item in typeproducts" :key="item.id" :value="item.id">{{ item.id }}. {{ item.product_name }}
                         </option>
                     </select>
                 </div>
@@ -18,7 +18,7 @@
                     <label for="id_raw_material">Название сырья</label>
                     <select v-model="project.id_raw_material" class="form-control form-select" id="id_raw_material"
                         name="id_raw_material">
-                        <option v-for="item in rawmaterials" :key="item.id" :value="item.id">{{ item.id }}. {{ item.product_name }}
+                        <option v-for="item in rawmaterials" :key="item.id" :value="item.id">{{ item.id }}. {{ item.name }}
                         </option>
                     </select>
                 </div>
@@ -81,17 +81,6 @@ export default {
                 const response = await getRecipe(projectId, headers);
                 this.project = response.data.data;
 
-                // Получаем данные о клиентах и продуктах
-                const clients = await getClients(headers);
-                const products = await getProducts(headers);
-                
-                // Находим соответствующего клиента и продукт по id
-                const client = clients.find(client => client.id === this.project.id_client);
-                const product = products.find(product => product.id === this.project.id_product);
-                
-                // Присваиваем ФИО клиента и название продукта
-                this.project.client_fullname = client ? `${client.lastname}` : '';
-                this.project.product_name = product ? product.name : '';
             } catch (error) {
                 console.error('Failed to fetch product data:', error);
             }
