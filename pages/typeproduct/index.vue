@@ -29,13 +29,13 @@
               <td>{{ project.product_name }}</td>
               <td>{{ project.quantity_produced }}</td>
               <td>{{ project.description }}</td>
-              <td>{{ project.status }}</td>
+              <td>{{ formatStatus(project.status) }}</td>
               <td>
                 <NuxtLink :to="`/typeproduct/edit/${project.id}`" class="btn btn-outline-success mx-1">Изменить
                 </NuxtLink>
               </td>
               <td>
-                <button @click="handleDelete(project.id)" className="btn btn-danger mx-1">Удалить</button>
+                <button @click="handleDelete(project.id)" class="btn btn-danger mx-1">Удалить</button>
               </td>
             </tr>
           </tbody>
@@ -43,9 +43,6 @@
       </div>
     </div>
   </section>
-
-
-
 </template>
 
 <script>
@@ -104,6 +101,9 @@ export default {
       } else {
         console.error('Trying to access localStorage on the server side.');
       }
+    },
+    formatStatus(status) {
+      return status === 1 ? 'Активный' : 'Не активный';
     },
 
     async handleExport() {
