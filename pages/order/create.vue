@@ -1,4 +1,3 @@
-<!-- create.vue -->
 <template>
     <h2 class="text-center mt-5 mb-3">Добавить заказ</h2>
     <div class="card">
@@ -27,13 +26,8 @@
                         id="date_of_shipment" name="date_of_shipment" />
                 </div>
                 <div class="form-group">
-                    <label for="units_of_measurement">Валюта</label>
-                    <input v-model="project.units_of_measurement" type="text" class="form-control"
-                        id="units_of_measurement" name="units_of_measurement" />
-                </div>
-                <div class="form-group">
                     <label for="price_per_unit">Цена за единицу</label>
-                    <input v-model="project.price_per_unit" type="text" class="form-control" id="price_per_unit"
+                    <input v-model="project.price_per_unit" type="number" step="0.01" class="form-control" id="price_per_unit"
                         name="price_per_unit" />
                 </div>
                 <div class="form-group">
@@ -43,8 +37,15 @@
                 </div>
                 <div class="form-group">
                     <label for="total_amount">Общая сумма</label>
-                    <input v-model="project.total_amount" type="text" class="form-control" id="total_amount"
-                        name="total_amount" />
+                    <input :value="totalAmount" type="text" class="form-control" id="total_amount"
+                        name="total_amount" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="units_of_measurement">Валюта</label>
+                    <select v-model="project.units_of_measurement" class="form-control form-select" id="units_of_measurement" name="units_of_measurement">
+                        <option value="сомони">Сомони</option>
+                        <option value="рубль">Рубль</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="type_of_sale">Тип заказа</label>
@@ -82,6 +83,13 @@ export default {
             products: [],
             token: ''
         };
+    },
+    computed: {
+        totalAmount() {
+            const price = parseFloat(this.project.price_per_unit);
+            const quantity = parseInt(this.project.quantity, 10);
+            return isNaN(price) || isNaN(quantity) ? '' : (price * quantity).toFixed(2);
+        }
     },
     mounted() {
         // Получаем токен из localStorage
@@ -122,6 +130,7 @@ export default {
             try {
                 const formattedDate = this.formatDate(this.project.date_of_shipment);
                 this.project.date_of_shipment = formattedDate;
+                this.project.total_amount = this.totalAmount;
 
                 this.isSaving = true;
                 // Передаем токен при создании заказа

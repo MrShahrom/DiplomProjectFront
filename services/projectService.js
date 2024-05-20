@@ -119,10 +119,14 @@ export const createProduct = (project, headers) =>{
     console.log(project, headers);
     return useNuxtApp().$axiosApiClient.post('/api/products', project, { headers })
 }  
-export const updateProduct = (project, id, headers) => {
-    console.log("Route:",`/api/products/${id}`, project, { headers });
-    return useNuxtApp().$axiosApiClient.patch(`/api/products/${id}`, project, { headers });
-};
+// export const updateProduct = (project, id, headers) => {
+//     console.log("Route:",`/api/products/${id}`, project, { headers });
+//     return useNuxtApp().$axiosApiClient.patch(`/api/products/${id}`, project, { headers });
+// };
+export const updateProduct = (formData, id, headers) => {
+    console.log("Route:", `/api/products/${id}?_method=PUT`, formData, { headers });
+    return useNuxtApp().$axiosApiClient.post(`/api/products/${id}?_method=PUT`, formData, { headers });
+  };
 export const deleteProduct = (id, headers) =>{
     return useNuxtApp().$axiosApiClient.delete(`/api/products/${id}`, { headers });
 }

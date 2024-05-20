@@ -33,7 +33,8 @@
                     <label for="id_supplier">Поставщик</label>
                     <select v-model="project.id_supplier" class="form-control form-select" id="id_supplier"
                         name="id_supplier">
-                        <option v-for="item in suppliers" :key="item.id" :value="item.id">{{ item.id }}. {{ item.name }}
+                        <option v-for="item in suppliers" :key="item.id" :value="item.id" selected>
+                            {{ item.id }}. {{ item.name }}
                         </option>
                     </select>
                 </div>
@@ -153,4 +154,3 @@ export default {
     },
 };
 </script>
- 

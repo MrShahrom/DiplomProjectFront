@@ -67,7 +67,7 @@ export default {
         id_type_product: '',
         quantity: '',
         status: '',
-        image: '', // Добавлено свойство для изображения
+        image: '',
       },
       isSaving: false,
       warehouses: [],
@@ -85,19 +85,11 @@ export default {
     handleImageChange(event) {
       const file = event.target.files[0];
       if (file) {
-        // Создаем объект FileReader
         const reader = new FileReader();
-
-        // Обработчик загрузки файла
         reader.onload = (e) => {
-          // Устанавливаем предварительный просмотр изображения
           this.project.image = e.target.result;
         };
-
-        // Читаем файл как URL-адрес данных
         reader.readAsDataURL(file);
-
-        // Сохраняем файл в переменной проекта
         this.project.imageFile = file;
       }
     },
@@ -116,9 +108,6 @@ export default {
 
     async fetchData() {
       try {
-        const headers = {
-          'Authorization': `Bearer ${this.token}`
-        };
         const [warehousesResponse, productTypesResponse] = await Promise.all([
           getSklads(this.token),
           getTypeProducts(this.token)
@@ -135,8 +124,11 @@ export default {
         this.isSaving = true;
 
         const formData = new FormData();
+        formData.append('_method', 'PUT');
         formData.append('name', this.project.name);
-        formData.append('image', this.project.imageFile); // Отправляем файл, а не URL
+        if (this.project.imageFile) {
+          formData.append('image', this.project.imageFile);
+        }
         formData.append('selling_price', this.project.selling_price);
         formData.append('id_sklad', this.project.id_sklad);
         formData.append('id_type_product', this.project.id_type_product);
@@ -158,7 +150,11 @@ export default {
         });
         this.isSaving = false;
       } catch (error) {
-        console.error('Error saving product:', error);
+        if (error.response && error.response.status === 422) {
+          console.error('Validation Error:', error.response.data.errors);
+        } else {
+          console.error('Error saving product:', error.response ? error.response.data : error);
+        }
         Swal.fire({
           icon: 'error',
           title: 'Произошла ошибка!',
@@ -167,7 +163,8 @@ export default {
         });
         this.isSaving = false;
       }
-    },
+    }
+
   },
 };
 </script>

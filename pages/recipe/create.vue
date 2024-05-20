@@ -26,7 +26,7 @@
                     <label for="unit">Ед. из. (кг)</label>
                     <select v-model="project.unit" class="form-control" id="unit" name="unit">
                         <option value="кг">кг</option>
-                        <option value="г">грамм</option>
+                        <option value="гр">грамм</option>
                     </select>
                 </div>
                 <div class="form-group">
